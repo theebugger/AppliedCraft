@@ -362,7 +362,7 @@ Paragraph text with **bold** and *italic*.
     return fetch(url, {
       method: opts.method || 'GET',
       headers: {
-        'Authorization': 'token ' + token,
+        'Authorization': 'Bearer ' + token,
         'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json',
       },
