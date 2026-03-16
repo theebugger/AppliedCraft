@@ -321,16 +321,11 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 0.62em;
+  width: 0.65em;
   height: 1em;
   opacity: 0;
   transition: opacity 0.15s ease;
-  overflow: hidden;
 }
-
-/* Optical kerning — narrow letters get tighter containers */
-.wm-letter[data-final="I"] { width: 0.3em; }
-.wm-letter[data-final="L"] { width: 0.52em; }
 
 .wm-letter.seed {
   opacity: 1;
