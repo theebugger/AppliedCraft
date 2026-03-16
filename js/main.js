@@ -91,14 +91,21 @@
           var rt = letterResolveTimes[i] || 1450;
           var progress = Math.min(elapsed / rt, 1);
 
-          // Per-letter cycle speed: 80ms → 25ms
-          var cycleMs = 80 - progress * 55;
+          // Cubic easing — stays slow for first half, ramps sharply
+          // at 50%: eased=0.125 (barely moved)
+          // at 75%: eased=0.42 (starting to accelerate)
+          // at 90%: eased=0.73 (fast)
+          var eased = progress * progress * progress;
+
+          // Per-letter cycle speed: 100ms → 18ms
+          var cycleMs = 100 - eased * 82;
 
           if (!lastUpdate[i] || (now - lastUpdate[i]) >= cycleMs) {
             var charSet = resolved.size < 4 ? NOISE_CHARS : CHARS;
             letters[i].textContent = charSet[Math.floor(Math.random() * charSet.length)];
             letters[i].className = 'wm-letter noise';
-            letters[i].style.opacity = (0.12 + progress * 0.53).toFixed(2);
+            // Opacity also eased — stays faint longer, darkens rapidly
+            letters[i].style.opacity = (0.10 + eased * 0.58).toFixed(2);
             lastUpdate[i] = now;
           }
         }
