@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Your AI Outputs Are Mediocre: You Never Defined Good — Applied Craft</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="Why Your AI Outputs Are Mediocre: You Never Defined Good">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="article">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='50%25' y='78%25' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%231C1917'>A</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme','dark');})();</script>
+</head>
+<body>
+  <a href="#article" class="skip-link">Skip to article</a>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="../index.html#about" class="nav-wordmark" aria-label="Applied Craft">
+      <span class="nav-wm-applied"><span class="wm-letter nav-wm-static" data-final="A">A</span><span class="wm-letter nav-wm-static" data-final="P">P</span><span class="wm-letter nav-wm-static" data-final="P">P</span><span class="wm-letter nav-wm-static" data-final="L">L</span><span class="wm-letter nav-wm-static" data-final="I">I</span><span class="wm-letter nav-wm-static" data-final="E">E</span><span class="wm-letter nav-wm-static" data-final="D">D</span></span>
+      <span class="nav-wm-craft"><span class="craft-letter nav-wm-static">C</span><span class="craft-letter nav-wm-static">R</span><span class="craft-letter nav-wm-static">A</span><span class="craft-letter nav-wm-static">F</span><span class="craft-letter nav-wm-static">T</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#applied-ai">Applied AI</a>
+      <a href="#subscribe" class="nav-cta">Subscribe</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+  </nav>
+  <main id="article">
+    <article class="article">
+      <header class="article-header">
+        <a href="../index.html#applied-ai" class="article-back">&larr; Applied AI</a>
+        <div class="article-meta">
+          <time datetime="2026-03-16">March 16, 2026</time>
+          <span class="article-meta-sep">&middot;</span>
+          <span>10 min read</span>
+        </div>
+        <h1 class="article-title">Why Your AI Outputs Are Mediocre: You Never Defined Good</h1>
+        <p class="article-lede"></p>
+      </header>
+      <div class="article-body">
+<p>There are five units you need to manage when running AI automations: <strong>intent</strong> how you express what you want, what <strong>context</strong> you provide, which <strong>models</strong> you select, and how you <strong>evaluate</strong> outputs. Those four are the operational layer. You'll figure them out. They're learnable, they're procedural, and there are increasingly good resources for getting them right.</p>
+<p>The fifth unit is the one that's quietly responsible for more AI automation failures than bad prompts, wrong models, and missing context combined. Almost nobody is talking about it, and the few who are talking about it are conflating two different problems under the same name.</p>
+<p>The fifth unit is <strong>taste</strong>.</p>
+<p>---</p>
+<h2>The Uncomfortable Diagnosis</h2>
+<p>Here's what I keep seeing: someone builds a workflow. Good prompt structure. Solid context. Reasonable model selection. They run it. Output comes back. And they stare at it.</p>
+<p>"It's... fine?"</p>
+<p>They can't tell you why it's fine. They can't tell you what would make it good. They can't tell you what specific quality it's missing. They just know it doesn't feel right. So they regenerate. Tweak the prompt. Regenerate again. Tweak something else. An hour later they've got something they'll accept, but they couldn't tell you why this version passed and the others didn't.</p>
+<p>This isn't a workflow problem. It's a judgment problem. And the judgment that's missing has a name: the ability to define what good looks like before you see the output.</p>
+<p>Most people cannot do this for their AI systems. Not won't. Cannot. They have never been forced to articulate their quality standards explicitly because in a pre-AI world, they didn't have to. They did the work themselves. Their taste was embedded in the act of production. They recognized quality because they'd internalized it over years of doing the work.</p>
+<p>Now they're managing a system that needs those standards stated explicitly, and they're discovering that "I'll know it when I see it" is not a specification. It's an admission that you haven't done the hard thinking yet.</p>
+<p>---</p>
+<h2>Two Problems With the Same Name</h2>
+<p>This is where most thinking about AI quality goes wrong. People treat "defining good" as one problem. It's two.</p>
+<p>The first is <strong>quality specification</strong>: writing down the threshold standards your output must meet. Does the brief lead with a customer problem? Does the analysis compare capabilities head-to-head? Is the executive summary under 200 words? Does each recommendation include a tradeoff? These are floor criteria. They separate terrible from adequate. They are encodable, versionable, testable, and eventually automatable. You can learn to write good specifications from a tutorial. They are operational discipline, and most teams don't have them.</p>
+<p>The second is <strong>taste</strong>: the judgment that operates above specifications. Taste is what looks at an output that meets all eight of your criteria and says "this is technically correct and completely lifeless." Taste is also what looks at an output that violates three criteria and says "this is actually the right answer for this moment." Taste is not a specification skill. It is the skill that knows when to override specifications.</p>
+<p>Most people working with AI systems need the first and don't have it. That's the immediate problem and it's fixable. But the advice that tells you to write quality rubrics and stops there is selling you the floor and calling it the ceiling. The floor gets you from terrible to adequate. Taste is what gets you from adequate to good. And the second problem is categorically harder than the first.</p>
+<p>---</p>
+<h2>The Floor: Quality Specification</h2>
+<p>The immediate discipline most people are missing is straightforward: define your quality standards before you see the output. Not after. Before.</p>
+<p>When you define "good" before you see what the model produces, you're evaluating against a standard. When you define "good" after you see the output, you're rationalizing a gut reaction. The sequence matters enormously.</p>
+<p>Sit down before you run the workflow and write 5-8 specific threshold criteria for this output. Not "is it good?" Specific. "Does it identify at least three distinct user segments?" "Does each recommendation include a tradeoff analysis?" "Is the executive summary under 200 words?" "Does it cite specific data points rather than general trends?"</p>
+<p>The specificity test: could someone who's never seen this output before apply this criterion and reach the same conclusion you would? If not, it's not specific enough.</p>
+<p>This takes ten minutes and transforms the entire interaction from vibes-based to criteria-based. When you have threshold criteria, you catch the obvious failures immediately instead of vaguely sensing something is wrong and spending an hour on regeneration cycles. You can give the model actionable feedback instead of "make it better." You can delegate routine evaluation to someone else on your team, or eventually to an automated check, because the standard lives in the criteria rather than in your head.</p>
+<p>Once you have this discipline, the organizational questions follow naturally: version your standards alongside your prompts so you know when and why the bar changed, audit for drift when anything in the chain changes, and encode criteria into the workflow itself so they survive personnel changes.</p>
+<p>This is real, valuable work. It's also the easy part.</p>
+<p>---</p>
+<h2>Taste Is Not Subjective. It's Unarticulated.</h2>
+<p>People push back here. "Quality is subjective. Different people have different tastes. You can't standardize this."</p>
+<p>I disagree. In most professional contexts, quality isn't actually subjective. It's unarticulated. There IS a shared understanding of what a good product brief looks like. There IS a shared sense of what makes a competitive analysis useful versus useless. There IS a standard. It's just that nobody's written it down because they never had to.</p>
+<p>The work of encoding quality specifications is the work of making the implicit explicit. And yes, it's hard. But hard is different from impossible, and it's different from subjective.</p>
+<p>When you force yourself to write down "what does a good version of this output look like," you discover that you actually can specify it in surprising detail:</p>
+<ul>
+<li>Does the opening lead with a customer problem or a product feature? (Customer problem is better.)</li>
+<li>Does the competitive section compare capabilities head-to-head or just list competitors? (Head-to-head is better.)</li>
+<li>Does the recommendation section commit to a direction or hedge with "it depends"? (Commit, with stated assumptions.)</li>
+<li>Is the tone appropriate for the audience: board-level conciseness for executives, technical depth for engineering?</li>
+</ul>
+<p>These aren't subjective preferences. They're judgment calls that most experienced PMs would agree on for a given context. The problem isn't that the standard is unknowable. The problem is that nobody's been forced to know it explicitly until now.</p>
+<p>But notice what those criteria actually are. They're threshold conditions. They tell you when something is <em>wrong</em>. They don't tell you when something is <em>right</em>. And that difference is where specifications end and taste begins.</p>
+<p>---</p>
+<h2>Why Specifications Aren't Enough</h2>
+<p>You end up with a system that reliably produces output that passes all the tests and moves nobody. That's the failure mode nobody talks about, and it's worse than obviously bad output because it's invisible. Bad output gets caught. Adequate output gets shipped, and then nothing happens.</p>
+<p>An output can meet every threshold criterion you've written and still be mediocre. That's not a failure of your criteria. It's the nature of the problem. Quality specifications tell you "the opening leads with a customer problem." Taste tells you whether it's the <em>right</em> customer problem, framed in the way that will make this specific executive sit forward in their chair, at this specific moment in the company's trajectory. Specifications tell you the recommendation section commits to a direction. Taste tells you whether the direction is actually right, even when it contradicts the data you told the model to cite.</p>
+<p>This is why automating threshold evaluation is safe and valuable (encode away, let the system flag outputs that miss your floor criteria) but automating taste-level evaluation is dangerous. If you outsource the "is this actually good?" judgment to a rubric or another model, you stop exercising the very faculty that produces the judgment. The threshold check keeps running. The muscle that distinguishes adequate from good starts to atrophy.</p>
+<p>Taste is the judgment that tells you "this is technically correct and completely lifeless." It is also the judgment that tells you "this breaks three of my rules and it's exactly right." You cannot encode that into a rubric, because the whole point is that it operates above and sometimes against the rubric. It is the ability to identify quality in non-consensus ways, including non-consensus with your own prior specifications.</p>
+<p>This is the part most people miss. They write good specifications, their outputs improve from terrible to adequate, and they declare the problem solved. It isn't. The gap between adequate and good is where all the value lives, and that gap is navigated by taste, not by better checklists.</p>
+<p>---</p>
+<h2>How Taste Develops</h2>
+<p>Here is where I need to be honest about a limitation.</p>
+<p>The prerequisite for exercising taste is having taste. If you've spent years doing the work, reading customer research, writing product briefs, evaluating competitive analyses, shipping products and living with the consequences, you have internalized standards that quality specifications help you externalize. If you haven't, no amount of criteria-writing will compensate. You can't encode what you don't have. You can't extract judgment you haven't built. The acquisition problem, actually developing taste in the first place, is a longer road with no shortcuts. It is learnable but not teachable. It comes from making consequential decisions, living with the outcomes, and updating your internal model over years.</p>
+<p>But there's something else that most operational advice about AI misses entirely. The discipline of pre-specifying criteria is a discipline of <em>applying</em> taste you already have. There is a different discipline that <em>develops</em> taste, and it works in the opposite direction.</p>
+<p>There's a time to write criteria first and evaluate against them. There's also a time to look at the output with fresh eyes, notice what bothers you, and then ask why. Sometimes the most valuable thing you can do is sit with an AI output, pay attention to your own reactions before you can articulate them, and then reverse-engineer what you noticed. Your gut responds before your criteria can. The vague sense that something is off, before you can name what, is your accumulated judgment pattern-matching against something your conscious specifications haven't captured yet.</p>
+<p>Pre-specifying criteria is taste applied. Noticing your reactions and asking why is taste developed. The second is how you discover quality dimensions you didn't know you cared about. Both matter. The first makes your current outputs better. The second makes your future judgment sharper.</p>
+<p>This is why the "write criteria before you look" advice is essential but incomplete. If that's all you ever do, you systematize your current taste but never expand it. The PMs who get genuinely good at evaluating AI output are the ones who alternate: specify criteria, evaluate against them, and then occasionally throw the criteria away, look at the output raw, and ask themselves what they notice that the criteria missed.</p>
+<p>---</p>
+<h2>Start Here</h2>
+<p>If you take one thing from this: before you run your next AI workflow, spend ten minutes writing down what a good output looks like. Be specific. Be testable. Write it down before you see what the model produces. Then evaluate the output against what you wrote.</p>
+<p>That gets you the floor. It gets you from terrible to adequate, and that alone will improve your outputs more than any prompt trick, model upgrade, or context optimization.</p>
+<p>But don't stop there. After the criteria-based evaluation, look at the output again. Ask yourself: does this pass the tests and still feel wrong? Does it fail a test and still feel right? The gap between what your criteria say and what your judgment says is where taste lives. Pay attention to that gap. It's telling you something your specifications haven't learned to say yet.</p>
+<p>There's a career dimension to this that's worth stating plainly. Quality specifications are learnable, transferable, and eventually automatable. Once you publish the rubric, anyone can apply it. Taste — the judgment that operates above and sometimes against the rubric — is the part that can't be copied, delegated, or compressed. When every PM on your team can write good specifications, the one who consistently exercises taste above the specifications is sending an expensive signal about the quality of their thinking. The signal is expensive precisely because a cheap alternative exists. That's what makes it credible.</p>
+<p>For years, your taste was invisible because it lived in the work you did yourself. The specifications are where your current judgment lives. The gap between the specifications and your reactions is where your next judgment develops.</p>
+
+      </div>
+      <div class="article-share">
+        <span class="article-share-label">Share</span>
+        <div class="article-share-links">
+          <a href="#" class="share-link" data-platform="twitter" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="share-link" data-platform="linkedin" aria-label="Share on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="#" class="share-link" data-platform="facebook" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="#" class="share-link" data-platform="whatsapp" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <button class="share-link share-native" data-platform="native" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+        </div>
+      </div>
+    </article>
+    <section class="section section--subscribe" id="subscribe">
+      <div class="container container--narrow">
+        <div class="subscribe-inner reveal">
+          <h2 class="subscribe-heading">Stay Sharp</h2>
+          <p class="subscribe-lead">Join product leaders who prefer signal over noise.</p>
+          <form class="subscribe-form" action="#" method="post" aria-label="Newsletter signup">
+            <label for="email" class="sr-only">Email address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" class="subscribe-input">
+            <button type="submit" class="subscribe-button">Subscribe</button>
+          </form>
+          <p class="subscribe-fine-print">Infrequent. Substantive. No filler.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="container"><div class="footer-inner"><span class="footer-brand">Applied Craft</span><span class="footer-sep">&middot;</span><a href="#" class="footer-link">RSS</a></div></div></footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>
