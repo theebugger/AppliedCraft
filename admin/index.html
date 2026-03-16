@@ -715,6 +715,7 @@ Paragraph text with **bold** and *italic*.
     function closeList() { if (inList) { html += '</' + inList + '>\n'; inList = null; } }
     function closeBq() { if (inBlockquote) { html += '</blockquote>\n'; inBlockquote = false; } }
     function inline(t) {
+      t = t.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
       t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       t = t.replace(/\*(.+?)\*/g, '<em>$1</em>');
       return t;

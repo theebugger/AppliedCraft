@@ -676,6 +676,18 @@ h1, h2, h3, h4 {
   font-style: italic;
 }
 
+.article-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.article-body a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
 .article-body blockquote {
   margin: var(--space-xl) 0;
   padding: var(--space-md) var(--space-xl);
