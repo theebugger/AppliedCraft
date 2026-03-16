@@ -327,6 +327,12 @@ h1, h2, h3, h4 {
   transition: opacity 0.15s ease;
 }
 
+/* Optical tightening — I is narrow, pull neighbors closer */
+.wm-letter[data-final="I"] {
+  margin-left: -0.1em;
+  margin-right: -0.1em;
+}
+
 .wm-letter.seed {
   opacity: 1;
 }
