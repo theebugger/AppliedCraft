@@ -521,8 +521,8 @@
           if (moreEl) moreEl.style.display = '';
         }
       })
-      .catch(function () {
-        // Fallback: show nothing (posts.json may not exist in local dev)
+      .catch(function (err) {
+        console.error('Failed to load posts:', err);
       });
   }
 
