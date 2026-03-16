@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Applied Craft</title>
+    <link>https://appliedcraft.blog</link>
+    <description>Opinionated analysis of how AI changes the way products are built, decisions are made, and value is created.</description>
+    <language>en</language>
+    <atom:link href="https://appliedcraft.blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Your AI Quality Problem Isn't Specifications. It's Taste.</title>
+      <link>https://appliedcraft.blog/posts/why-your-ai-outputs-are-mediocre-you-never-defined-good.html</link>
+      <guid>https://appliedcraft.blog/posts/why-your-ai-outputs-are-mediocre-you-never-defined-good.html</guid>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Most AI quality advice sells you the floor and calls it the ceiling.</description>
+    </item>
+    <item>
+      <title>Everyone Says Human Skills Will Matter. They're Right About One of Them.</title>
+      <link>https://appliedcraft.blog/posts/everyone-says-human-skills-will-matter-they-re-right-about-one-of-them.html</link>
+      <guid>https://appliedcraft.blog/posts/everyone-says-human-skills-will-matter-they-re-right-about-one-of-them.html</guid>
+      <pubDate>Sun, 15 Feb 2026 00:00:00 GMT</pubDate>
+      <description>The AI-proof skills list everyone cites is six items long. Five of them are wrong.</description>
+    </item>
+    <item>
+      <title>Your PM Job Is Six Jobs. You're Offloading the Wrong Half.</title>
+      <link>https://appliedcraft.blog/posts/your-pm-job-is-six-jobs-you-re-offloading-the-wrong-half.html</link>
+      <guid>https://appliedcraft.blog/posts/your-pm-job-is-six-jobs-you-re-offloading-the-wrong-half.html</guid>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 GMT</pubDate>
+      <description>The mechanical half of every PM skill is now free. The judgment half is now exposed.</description>
+    </item>
+    <item>
+      <title>The PM Skills Map, Redrawn for AI</title>
+      <link>https://appliedcraft.blog/posts/the-pm-skills-map-redrawn-for-ai.html</link>
+      <guid>https://appliedcraft.blog/posts/the-pm-skills-map-redrawn-for-ai.html</guid>
+      <pubDate>Sun, 18 Jan 2026 00:00:00 GMT</pubDate>
+      <description>The four senses haven't changed. What counts within each one has.</description>
+    </item>
+    <item>
+      <title>You're Not Leveraging AI. You're Leveraging a Fast Typewriter.</title>
+      <link>https://appliedcraft.blog/posts/you-re-not-leveraging-ai-you-re-leveraging-a-fast-typewriter.html</link>
+      <guid>https://appliedcraft.blog/posts/you-re-not-leveraging-ai-you-re-leveraging-a-fast-typewriter.html</guid>
+      <pubDate>Sun, 04 Jan 2026 00:00:00 GMT</pubDate>
+      <description>And the distinction matters far more than you think.</description>
+    </item>
+  </channel>
+</rss>

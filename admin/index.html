@@ -539,6 +539,57 @@ Paragraph text with **bold** and *italic*.
     return md;
   }
 
+  // ── RSS Feed Generator ──
+  var SITE = 'https://appliedcraft.blog';
+
+  function generateRSS() {
+    var published = posts
+      .filter(function (p) { return p.status === 'published'; })
+      .sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+
+    var items = published.map(function (p) {
+      var link = SITE + '/posts/' + p.slug + '.html';
+      return '    <item>\n' +
+        '      <title>' + escXML(p.title) + '</title>\n' +
+        '      <link>' + link + '</link>\n' +
+        '      <guid>' + link + '</guid>\n' +
+        '      <pubDate>' + new Date(p.date + 'T00:00:00Z').toUTCString() + '</pubDate>\n' +
+        '      <description>' + escXML(p.lede) + '</description>\n' +
+        '    </item>';
+    }).join('\n');
+
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n' +
+      '  <channel>\n' +
+      '    <title>Applied Craft</title>\n' +
+      '    <link>' + SITE + '</link>\n' +
+      '    <description>Opinionated analysis of how AI changes the way products are built, decisions are made, and value is created.</description>\n' +
+      '    <language>en</language>\n' +
+      '    <atom:link href="' + SITE + '/feed.xml" rel="self" type="application/rss+xml"/>\n' +
+      items + '\n' +
+      '  </channel>\n' +
+      '</rss>\n';
+  }
+
+  function escXML(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function updateRSS() {
+    var xml = generateRSS();
+    return gh('contents/feed.xml?ref=' + BRANCH).then(function (file) {
+      return gh('contents/feed.xml', {
+        method: 'PUT',
+        body: { message: 'Update RSS feed', content: btoa(unescape(encodeURIComponent(xml))), sha: file.sha, branch: BRANCH }
+      });
+    }).catch(function () {
+      return gh('contents/feed.xml', {
+        method: 'PUT',
+        body: { message: 'Create RSS feed', content: btoa(unescape(encodeURIComponent(xml))), branch: BRANCH }
+      });
+    });
+  }
+
   // ── Tabs ──
   window.setTab = function (tab) {
     var writeTab = document.getElementById('tab-write');
@@ -621,6 +672,8 @@ Paragraph text with **bold** and *italic*.
       var idx = posts.findIndex(function (p) { return p.slug === slug; });
       if (idx >= 0) { posts[idx] = meta; } else { posts.unshift(meta); }
       return updatePostsJson();
+    }).then(function () {
+      return updateRSS();
     }).then(function () {
       // 3. Clean up draft
       localStorage.removeItem('ac-draft-' + slug);
@@ -832,7 +885,7 @@ Paragraph text with **bold** and *italic*.
 '      </div>\n' +
 '    </section>\n' +
 '  </main>\n' +
-'  <footer class="footer"><div class="container"><div class="footer-inner"><span class="footer-brand">Applied Craft</span><span class="footer-sep">&middot;</span><a href="#" class="footer-link">RSS</a></div></div></footer>\n' +
+'  <footer class="footer"><div class="container"><div class="footer-inner"><span class="footer-brand">Applied Craft</span><span class="footer-sep">&middot;</span><a href="../feed.xml" class="footer-link">RSS</a></div></div></footer>\n' +
 '  <script src="../js/main.js"><\/script>\n' +
 '</body>\n</html>';
   }
