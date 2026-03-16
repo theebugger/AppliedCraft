@@ -191,12 +191,41 @@ h1, h2, h3, h4 {
 }
 
 .nav-wordmark {
-  font-family: var(--font-heading);
-  font-size: 1.125rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  line-height: 1;
   color: var(--color-text);
   will-change: opacity;
+  gap: 0.15em;
+}
+
+.nav-wm-applied {
+  display: flex;
+  justify-content: center;
+  gap: 0.04em;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Nav letters are visible by default; animation resets them */
+.wm-letter.nav-wm-static {
+  opacity: 1;
+  color: inherit;
+  animation: none;
+}
+
+.nav-wm-craft {
+  font-size: 0.5625rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: opacity 0.8s var(--ease-out);
 }
 
 .nav-links {
@@ -303,8 +332,8 @@ h1, h2, h3, h4 {
 }
 
 .wm-letter.noise {
-  opacity: 0.25;
-  color: var(--color-text-tertiary);
+  /* opacity progresses via JS — faint to near-solid */
+  opacity: 0.12;
 }
 
 .wm-letter.resolving {
@@ -331,14 +360,28 @@ h1, h2, h3, h4 {
   line-height: 1;
   color: var(--color-text);
   margin-top: 0.3em;
-  opacity: 0;
   transform: translateY(8px);
-  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transition: transform 0.8s var(--ease-out);
 }
 
 .wordmark-craft.visible {
-  opacity: 1;
   transform: translateY(0);
+}
+
+/* Individual CRAFT letters — sequential reveal */
+.craft-letter {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.craft-letter.visible {
+  opacity: 1;
+}
+
+.craft-letter.nav-wm-static {
+  opacity: 1;
+  animation: none;
 }
 
 
@@ -1052,8 +1095,11 @@ h1, h2, h3, h4 {
 }
 
 .footer-brand {
-  font-family: var(--font-heading);
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
 }
 
 .footer-sep {
@@ -1119,7 +1165,8 @@ input:focus-visible {
     transform: none;
   }
 
-  .wm-letter {
+  .wm-letter,
+  .craft-letter {
     opacity: 1 !important;
   }
 }

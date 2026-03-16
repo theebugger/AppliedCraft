@@ -44,118 +44,143 @@
     { index: 6, time: 1450 },  // D — furthest from seeds
   ];
 
+  /* ── Shared diffusion animation ──
+     Runs the exact same A-I seed → noise → resolve
+     sequence on any array of .wm-letter elements.
+     Calls onComplete when all 7 letters have locked in. */
+
+  function runDiffusion(letters, onComplete) {
+    var resolved = new Set();
+    var noiseInterval = null;
+
+    // Per-letter resolve times (ms after noise starts)
+    // Used to compute opacity progression — letters near
+    // the seeds darken faster than distant ones.
+    var letterResolveTimes = {};
+    RESOLVE_SCHEDULE.forEach(function (item) {
+      letterResolveTimes[item.index] = item.time;
+    });
+
+    // Phase 1: Show seed letters (A and I)
+    setTimeout(function () {
+      SEED_INDICES.forEach(function (i) {
+        letters[i].textContent = WORD[i];
+        letters[i].className = 'wm-letter seed';
+        resolved.add(i);
+      });
+    }, 300);
+
+    // Phase 2: Start noise (~250ms after seeds)
+    // Each letter's opacity progresses from faint toward solid
+    // based on how close it is to its own resolve time.
+    var noiseStartedAt;
+    setTimeout(function () {
+      noiseStartedAt = Date.now();
+      noiseInterval = setInterval(function () {
+        var elapsed = Date.now() - noiseStartedAt;
+        for (var i = 0; i < letters.length; i++) {
+          if (!resolved.has(i)) {
+            var charSet = resolved.size < 4 ? NOISE_CHARS : CHARS;
+            letters[i].textContent = charSet[Math.floor(Math.random() * charSet.length)];
+            letters[i].className = 'wm-letter noise';
+            // Opacity: 0.12 → 0.65, paced per-letter
+            var rt = letterResolveTimes[i] || 1450;
+            var progress = Math.min(elapsed / rt, 1);
+            letters[i].style.opacity = (0.12 + progress * 0.53).toFixed(2);
+          }
+        }
+      }, 55);
+    }, 550);
+
+    // Phase 3: Resolve letters according to schedule
+    var noiseStartTime = 550;
+
+    RESOLVE_SCHEDULE.forEach(function (item) {
+      var decelStart = noiseStartTime + item.time - 350;
+      var resolveTime = noiseStartTime + item.time;
+
+      // Deceleration — bump opacity near final
+      setTimeout(function () {
+        if (letters[item.index]) {
+          letters[item.index].classList.remove('noise');
+          letters[item.index].classList.add('resolving');
+          letters[item.index].style.opacity = '0.75';
+        }
+      }, decelStart);
+
+      var decelCount = 0;
+      var decelInterval = setInterval(function () {
+        if (letters[item.index] && !resolved.has(item.index)) {
+          letters[item.index].textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
+          decelCount++;
+        }
+        if (decelCount >= 3) clearInterval(decelInterval);
+      }, 100);
+
+      // Lock in — clear inline opacity, let .resolved class take over
+      setTimeout(function () {
+        clearInterval(decelInterval);
+        if (letters[item.index]) {
+          letters[item.index].textContent = WORD[item.index];
+          letters[item.index].style.opacity = '';
+          letters[item.index].classList.remove('noise', 'resolving');
+          letters[item.index].classList.add('resolved');
+          resolved.add(item.index);
+        }
+
+        if (resolved.size === WORD.length) {
+          clearInterval(noiseInterval);
+          if (onComplete) onComplete();
+        }
+      }, resolveTime);
+    });
+  }
+
+
+  /* ── Sequential CRAFT letter reveal ── */
+
+  function revealCraftLetters(craftEl) {
+    var letters = craftEl.querySelectorAll('.craft-letter');
+    letters.forEach(function (letter, i) {
+      setTimeout(function () {
+        letter.classList.add('visible');
+      }, 50 * i);
+    });
+  }
+
+
+  /* ── Hero wordmark (page load) ── */
+
   function initWordmark() {
-    const container = document.getElementById('wordmark-applied');
-    const craftEl = document.getElementById('wordmark-craft');
-    const taglineEl = document.getElementById('hero-tagline');
-    const ctaEl = document.getElementById('hero-cta');
+    var container = document.getElementById('wordmark-applied');
+    var craftEl = document.getElementById('wordmark-craft');
+    var taglineEl = document.getElementById('hero-tagline');
+    var ctaEl = document.getElementById('hero-cta');
 
     if (!container) return;
 
-    const letters = Array.from(container.querySelectorAll('.wm-letter'));
-    const resolved = new Set();
-    let noiseInterval = null;
+    var letters = Array.from(container.querySelectorAll('.wm-letter'));
 
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion) {
-      // Skip animation entirely — show everything immediately
-      letters.forEach((el, i) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      letters.forEach(function (el, i) {
         el.textContent = WORD[i];
         el.classList.add('resolved');
       });
       craftEl.classList.add('visible');
+      craftEl.querySelectorAll('.craft-letter').forEach(function (l) { l.classList.add('visible'); });
       taglineEl.classList.add('visible');
       ctaEl.classList.add('visible');
       heroReady = true;
       return;
     }
 
-    // ── Phase 1: Show seed letters (A and I) ──
-    setTimeout(() => {
-      SEED_INDICES.forEach(i => {
-        letters[i].textContent = WORD[i];
-        letters[i].classList.add('seed');
-        resolved.add(i);
-      });
-    }, 300);
-
-    // ── Phase 2: Start noise on remaining positions ──
-    // Brief beat after seeds appear (~250ms of "AI" visible alone)
-    setTimeout(() => {
-      // Show noise characters cycling at ~55ms (same speed)
-      noiseInterval = setInterval(() => {
-        letters.forEach((el, i) => {
-          if (!resolved.has(i)) {
-            const charSet = resolved.size < 4 ? NOISE_CHARS : CHARS;
-            el.textContent = charSet[Math.floor(Math.random() * charSet.length)];
-            el.classList.add('noise');
-            el.classList.remove('resolving');
-          }
-        });
-      }, 55);
-    }, 550);
-
-    // ── Phase 3: Resolve letters according to schedule ──
-    const noiseStartTime = 550;
-
-    RESOLVE_SCHEDULE.forEach(({ index, time }) => {
-      // Deceleration phase: slow down cycling before lock-in
-      const decelStart = noiseStartTime + time - 350;
-      const resolveTime = noiseStartTime + time;
-
-      // Start deceleration
-      setTimeout(() => {
-        if (letters[index]) {
-          letters[index].classList.remove('noise');
-          letters[index].classList.add('resolving');
-        }
-      }, decelStart);
-
-      // Run a brief deceleration sequence
-      let decelCount = 0;
-      const decelInterval = setInterval(() => {
-        if (letters[index] && !resolved.has(index)) {
-          letters[index].textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
-          decelCount++;
-        }
-        if (decelCount >= 3) {
-          clearInterval(decelInterval);
-        }
-      }, 100);
-
-      // Lock in the correct letter
-      setTimeout(() => {
-        clearInterval(decelInterval);
-        if (letters[index]) {
-          letters[index].textContent = WORD[index];
-          letters[index].classList.remove('noise', 'resolving');
-          letters[index].classList.add('resolved');
-          resolved.add(index);
-        }
-
-        // When all letters are resolved
-        if (resolved.size === WORD.length) {
-          clearInterval(noiseInterval);
-
-          // Show CRAFT — let it breathe after the wordmark resolves
-          setTimeout(() => {
-            craftEl.classList.add('visible');
-          }, 400);
-
-          // Show tagline
-          setTimeout(() => {
-            taglineEl.classList.add('visible');
-          }, 800);
-
-          // Show CTA
-          setTimeout(() => {
-            ctaEl.classList.add('visible');
-            heroReady = true;
-          }, 1200);
-        }
-      }, resolveTime);
+    runDiffusion(letters, function () {
+      setTimeout(function () {
+        craftEl.classList.add('visible');
+        revealCraftLetters(craftEl);
+      }, 400);
+      setTimeout(function () { taglineEl.classList.add('visible'); }, 900);
+      setTimeout(function () { ctaEl.classList.add('visible'); heroReady = true; }, 1300);
     });
   }
 
@@ -334,6 +359,99 @@
           top: targetPosition,
           behavior: 'smooth',
         });
+      });
+    });
+  }
+
+
+  /* ═══════════════════════════════════════════════
+     NAV WORDMARK CLICK — DIFFUSION + NAVIGATE
+
+     Tapping the nav wordmark runs the exact same
+     diffusion animation as the hero (same code via
+     runDiffusion), while simultaneously scrolling
+     to #about. The user's attention is on the
+     animation; the page moves underneath.
+     ═══════════════════════════════════════════════ */
+
+  function initNavWordmarkClick() {
+    var link = document.querySelector('.nav-wordmark');
+    if (!link) return;
+
+    var navApplied = link.querySelector('.nav-wm-applied');
+    var navCraft = link.querySelector('.nav-wm-craft');
+    if (!navApplied || !navCraft) return;
+
+    var navLetters = Array.from(navApplied.querySelectorAll('.wm-letter'));
+    var animating = false;
+
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (animating) return;
+      animating = true;
+
+      // A and I stay visible — set them to seed immediately
+      SEED_INDICES.forEach(function (i) {
+        navLetters[i].textContent = WORD[i];
+        navLetters[i].className = 'wm-letter seed';
+      });
+
+      // Other letters fade out smoothly (same window as hero seed phase)
+      navLetters.forEach(function (el, i) {
+        if (!SEED_INDICES.has(i)) {
+          el.style.transition = 'opacity 0.25s ease';
+          el.style.opacity = '0';
+        }
+      });
+
+      // After fade, clear non-seed text and reset to default state
+      setTimeout(function () {
+        navLetters.forEach(function (el, i) {
+          if (!SEED_INDICES.has(i)) {
+            el.textContent = '';
+            el.style.transition = '';
+            el.style.opacity = '';
+            el.className = 'wm-letter';
+          }
+        });
+      }, 250);
+
+      // Hide CRAFT letters
+      var navCraftLetters = navCraft.querySelectorAll('.craft-letter');
+      navCraftLetters.forEach(function (el) {
+        el.classList.remove('nav-wm-static', 'visible');
+      });
+
+      // Start scroll immediately — in parallel with animation
+      var aboutEl = document.querySelector('#about');
+      if (aboutEl) {
+        var navHeight = document.querySelector('.nav').offsetHeight || 0;
+        var pos = aboutEl.getBoundingClientRect().top + window.scrollY - navHeight + 80;
+        window.scrollTo({ top: pos, behavior: 'smooth' });
+      }
+
+      // Run the exact same diffusion animation
+      runDiffusion(navLetters, function () {
+        // CRAFT letters reveal sequentially (same 400ms delay as hero)
+        setTimeout(function () {
+          revealCraftLetters(navCraft);
+        }, 400);
+
+        // Restore static state after CRAFT appears
+        setTimeout(function () {
+          animating = false;
+          navLetters.forEach(function (el) {
+            el.className = 'wm-letter nav-wm-static';
+          });
+          navCraftLetters.forEach(function (el) {
+            el.classList.add('nav-wm-static');
+          });
+
+          // If on another page, navigate after animation
+          if (!aboutEl) {
+            window.location.href = link.href;
+          }
+        }, 900);
       });
     });
   }
@@ -548,6 +666,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     initWordmark();
     initWordmarkScroll();
+    initNavWordmarkClick();
     initScrollReveal();
     initNavScroll();
     initSmoothScroll();
