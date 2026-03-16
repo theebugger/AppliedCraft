@@ -623,7 +623,7 @@ Paragraph text with **bold** and *italic*.
       localStorage.removeItem('ac-draft-' + slug);
       currentSlug = slug;
       document.getElementById('ed-status').textContent = 'Published';
-      toast('Published — site rebuilds in ~30s');
+      toast('Published. Site rebuilds in ~30s.');
     }).catch(function (err) {
       document.getElementById('ed-status').textContent = 'Failed';
       toast('Publish failed: ' + err.message);
