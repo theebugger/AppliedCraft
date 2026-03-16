@@ -27,15 +27,6 @@
     "status": "published"
   },
   {
-    "slug": "product-managers-blind-spot-in-ai",
-    "title": "The Product Manager's Blind Spot in AI",
-    "lede": "We optimise for model accuracy when the actual failure mode is adoption.",
-    "date": "2026-01-28",
-    "readTime": "7 min read",
-    "excerpt": "We optimise for model accuracy when the actual failure mode is adoption. The best model your users don't trust is worse than a mediocre one they do.",
-    "status": "published"
-  },
-  {
     "slug": "the-pm-skills-map-redrawn-for-ai",
     "title": "The PM Skills Map, Redrawn for AI",
     "lede": "The four senses haven't changed. What counts within each one has.",
