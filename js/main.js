@@ -71,25 +71,38 @@
     }, 300);
 
     // Phase 2: Start noise (~250ms after seeds)
-    // Each letter's opacity progresses from faint toward solid
-    // based on how close it is to its own resolve time.
+    // Each letter has its own cycle speed and opacity, both
+    // progressing based on proximity to its resolve time.
+    // Speed: 80ms (slow, exploratory) → 25ms (rapid convergence)
+    // Opacity: 0.12 (faint) → 0.65 (near-solid)
+    // The acceleration mirrors diffusion model confidence.
     var noiseStartedAt;
     setTimeout(function () {
       noiseStartedAt = Date.now();
+      var lastUpdate = {};
+
       noiseInterval = setInterval(function () {
-        var elapsed = Date.now() - noiseStartedAt;
+        var now = Date.now();
+        var elapsed = now - noiseStartedAt;
+
         for (var i = 0; i < letters.length; i++) {
-          if (!resolved.has(i)) {
+          if (resolved.has(i)) continue;
+
+          var rt = letterResolveTimes[i] || 1450;
+          var progress = Math.min(elapsed / rt, 1);
+
+          // Per-letter cycle speed: 80ms → 25ms
+          var cycleMs = 80 - progress * 55;
+
+          if (!lastUpdate[i] || (now - lastUpdate[i]) >= cycleMs) {
             var charSet = resolved.size < 4 ? NOISE_CHARS : CHARS;
             letters[i].textContent = charSet[Math.floor(Math.random() * charSet.length)];
             letters[i].className = 'wm-letter noise';
-            // Opacity: 0.12 → 0.65, paced per-letter
-            var rt = letterResolveTimes[i] || 1450;
-            var progress = Math.min(elapsed / rt, 1);
             letters[i].style.opacity = (0.12 + progress * 0.53).toFixed(2);
+            lastUpdate[i] = now;
           }
         }
-      }, 55);
+      }, 20); // Master loop at 20ms — per-letter timing gates the actual updates
     }, 550);
 
     // Phase 3: Resolve letters according to schedule
