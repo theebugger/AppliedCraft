@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applied Craft — Clarity for product leaders navigating AI</title>
+  <meta name="description" content="Opinionated analysis of how AI changes the way products are built, decisions are made, and value is created. For product leaders who prefer signal over noise.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Applied Craft">
+  <meta property="og:description" content="Clarity for product leaders navigating AI.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon: letterform "A" in serif — simple, recognizable, durable -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='50%25' y='78%25' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%231C1917'>A</text></svg>">
+
+  <!-- Google Fonts: Newsreader for editorial authority -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Set theme before paint to prevent flash -->
+  <script>
+    (function() {
+      var s = localStorage.getItem('theme');
+      if (s) document.documentElement.setAttribute('data-theme', s);
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Skip link for accessibility -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Navigation: minimal, two links. Restraint is the signal. -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-wordmark">Applied Craft</a>
+    <div class="nav-links">
+      <a href="#applied-ai">Applied AI</a>
+      <a href="#subscribe" class="nav-cta">Subscribe</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- ═══════════════════════════════════════════
+         HERO: Entry beat (Tom's Entry-Proof-Action).
+         The animated wordmark IS the entry point.
+         ═══════════════════════════════════════════ -->
+    <section class="hero" aria-label="Applied Craft — home">
+      <div class="hero-inner">
+
+        <!-- Wordmark: each letter is an individually animated span.
+             A (index 0) and I (index 4) are "seeds" — visible first.
+             Other letters resolve via diffusion animation. -->
+        <div class="wordmark" role="heading" aria-level="1" aria-label="Applied Craft">
+          <div class="wordmark-applied" id="wordmark-applied" aria-hidden="true">
+            <span class="wm-letter" data-index="0" data-final="A"></span>
+            <span class="wm-letter" data-index="1" data-final="P"></span>
+            <span class="wm-letter" data-index="2" data-final="P"></span>
+            <span class="wm-letter" data-index="3" data-final="L"></span>
+            <span class="wm-letter" data-index="4" data-final="I"></span>
+            <span class="wm-letter" data-index="5" data-final="E"></span>
+            <span class="wm-letter" data-index="6" data-final="D"></span>
+          </div>
+          <div class="wordmark-craft" id="wordmark-craft" aria-hidden="true">CRAFT</div>
+        </div>
+
+        <p class="hero-tagline" id="hero-tagline">
+          Clarity for product leaders navigating AI.
+        </p>
+
+        <a href="#applied-ai" class="hero-cta" id="hero-cta">
+          Read Applied AI<span class="arrow">&nbsp;&rarr;</span>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         APPLIED AI: The flagship publication.
+         Proof beat — demonstrates the brand voice.
+         ═══════════════════════════════════════════ -->
+    <section class="section section--ai" id="applied-ai">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Publication</span>
+          <h2 class="section-title">Applied AI</h2>
+        </header>
+
+        <div class="ai-intro reveal">
+          <p class="lead">
+            Not another AI newsletter. Opinionated analysis of how artificial intelligence
+            changes the way products are built, decisions are made, and value is created.
+          </p>
+          <p>
+            No trend roundups. No paper summaries. No "top 10 tools" lists.
+            Each essay takes a position. Some of those positions will be wrong.
+            That's the cost of saying something that matters.
+          </p>
+        </div>
+
+        <!-- Placeholder posts — titles embody brand voice -->
+        <div class="posts-grid">
+          <article class="post-card reveal">
+            <time class="post-date" datetime="2026-03-10">March 2026</time>
+            <h3 class="post-title">
+              <a href="posts/why-most-ai-product-strategies-are-just-feature-lists.html">Why Most AI Product Strategies Are Just Feature Lists</a>
+            </h3>
+            <p class="post-excerpt">
+              The difference between "we added AI" and an actual product strategy is the same
+              difference between a grocery list and a recipe.
+            </p>
+            <span class="post-meta">8 min read</span>
+          </article>
+
+          <article class="post-card reveal">
+            <time class="post-date" datetime="2026-02-24">February 2026</time>
+            <h3 class="post-title">
+              <a href="#">The Build vs. Buy Decision Framework for AI in Product</a>
+            </h3>
+            <p class="post-excerpt">
+              A decision framework for when to build your own model, when to use an API,
+              and when the answer is neither.
+            </p>
+            <span class="post-meta">12 min read</span>
+          </article>
+
+          <article class="post-card reveal">
+            <time class="post-date" datetime="2026-02-10">February 2026</time>
+            <h3 class="post-title">
+              <a href="#">Knowing When Not to Ship: AI Edition</a>
+            </h3>
+            <p class="post-excerpt">
+              The hardest product decision in AI isn't what to build.
+              It's what to stop building.
+            </p>
+            <span class="post-meta">6 min read</span>
+          </article>
+          <article class="post-card post-card--hidden reveal">
+            <time class="post-date" datetime="2026-01-28">January 2026</time>
+            <h3 class="post-title">
+              <a href="#">The Product Manager's Blind Spot in AI</a>
+            </h3>
+            <p class="post-excerpt">
+              We optimise for model accuracy when the actual failure mode is adoption.
+              The best model your users don't trust is worse than a mediocre one they do.
+            </p>
+            <span class="post-meta">7 min read</span>
+          </article>
+
+          <article class="post-card post-card--hidden reveal">
+            <time class="post-date" datetime="2026-01-14">January 2026</time>
+            <h3 class="post-title">
+              <a href="#">Evaluating AI Vendors: A Framework for Product Teams</a>
+            </h3>
+            <p class="post-excerpt">
+              Most vendor evaluations test the demo. Here's a framework for testing
+              what happens six months after the demo.
+            </p>
+            <span class="post-meta">10 min read</span>
+          </article>
+
+          <article class="post-card post-card--hidden reveal">
+            <time class="post-date" datetime="2025-12-18">December 2025</time>
+            <h3 class="post-title">
+              <a href="#">What Your AI Roadmap Is Missing: The Adoption Problem</a>
+            </h3>
+            <p class="post-excerpt">
+              You shipped the feature. The model works. Usage is flat.
+              The roadmap had a gap where the change management should have been.
+            </p>
+            <span class="post-meta">9 min read</span>
+          </article>
+        </div>
+
+        <div class="posts-more">
+          <button class="posts-show-more" id="posts-show-more" type="button">
+            More essays<span class="arrow">&nbsp;&rarr;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         THE CRAFT: Brand pillars / values.
+         Three pillars, each a costly signal.
+         ═══════════════════════════════════════════ -->
+    <section class="section section--craft" id="craft">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Philosophy</span>
+          <h2 class="section-title">The Craft</h2>
+        </header>
+
+        <div class="pillars">
+          <div class="pillar reveal">
+            <h3 class="pillar-title">Practitioner Depth</h3>
+            <p class="pillar-body">
+              Built from experience making product decisions, not from observing
+              people who make them. Every framework here has been pressure-tested
+              against actual constraints, actual stakeholders, actual deadlines.
+            </p>
+          </div>
+
+          <div class="pillar reveal">
+            <h3 class="pillar-title">Opinionated Clarity</h3>
+            <p class="pillar-body">
+              Positions are more useful than summaries. If you can't disagree with
+              an essay, the essay didn't say anything. Neutral coverage of everything
+              is a service to no one.
+            </p>
+          </div>
+
+          <div class="pillar reveal">
+            <h3 class="pillar-title">Decision-Ready</h3>
+            <p class="pillar-body">
+              Every piece ends with something you can actually do. The gap between
+              "interesting" and "useful" is the gap between reading and deciding.
+              This closes it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         ABOUT: Personal credibility signal.
+         Brief, honest, specific.
+         ═══════════════════════════════════════════ -->
+    <section class="section section--about" id="about">
+      <div class="container container--narrow">
+        <div class="about-content reveal">
+          <h2 class="about-heading">About</h2>
+          <p>
+            Applied Craft is written by a <a href="about.html" class="about-link">product leader</a> who has spent years at the
+            intersection of product strategy and artificial intelligence.
+          </p>
+          <p>
+            This is not journalism. It's not consulting. It's one practitioner's attempt
+            to think clearly about hard problems in public, and to share those frameworks
+            with others facing the same decisions.
+          </p>
+          <p>
+            The name says what it is: the craft of applying ideas to real work.
+            Starting with AI. Eventually, more.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         SUBSCRIBE: Action beat.
+         White-space moat, single accent color,
+         clear CTA (Tom's Entry-Proof-Action).
+         ═══════════════════════════════════════════ -->
+    <section class="section section--subscribe" id="subscribe">
+      <div class="container container--narrow">
+        <div class="subscribe-inner reveal">
+          <h2 class="subscribe-heading">Stay Sharp</h2>
+          <p class="subscribe-lead">
+            Join product leaders who prefer signal over noise.
+          </p>
+          <form class="subscribe-form" action="#" method="post" aria-label="Newsletter signup">
+            <label for="email" class="sr-only">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="your@email.com"
+              required
+              autocomplete="email"
+              class="subscribe-input"
+            >
+            <button type="submit" class="subscribe-button">Subscribe</button>
+          </form>
+          <p class="subscribe-fine-print">Infrequent. Substantive. No filler.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Footer: minimal. Restraint. -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-brand">Applied Craft</span>
+        <span class="footer-sep">&middot;</span>
+        <a href="#" class="footer-link">RSS</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
