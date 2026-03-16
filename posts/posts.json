@@ -1,14 +1,5 @@
 [
   {
-    "slug": "everyone-says-human-skills-will-matter-they-re-right-about-one-of-them",
-    "title": "Everyone Says Human Skills Will Matter. They're Right About One of Them.",
-    "lede": "The AI-proof skills list everyone cites is six items long. Five of them are wrong.",
-    "date": "2026-02-15",
-    "readTime": "8 min read",
-    "excerpt": "The AI-proof skills list everyone cites is six items long. Five of them are wrong.",
-    "status": "published"
-  },
-  {
     "slug": "why-most-ai-product-strategies-are-just-feature-lists",
     "title": "Why Most AI Product Strategies Are Just Feature Lists",
     "lede": "The difference between \"we added AI\" and an actual product strategy is the same difference between a grocery list and a recipe.",
@@ -18,12 +9,12 @@
     "status": "published"
   },
   {
-    "slug": "build-vs-buy-decision-framework-ai",
-    "title": "The Build vs. Buy Decision Framework for AI in Product",
-    "lede": "A decision framework for when to build your own model, when to use an API, and when the answer is neither.",
-    "date": "2026-02-24",
-    "readTime": "12 min read",
-    "excerpt": "A decision framework for when to build your own model, when to use an API, and when the answer is neither.",
+    "slug": "everyone-says-human-skills-will-matter-they-re-right-about-one-of-them",
+    "title": "Everyone Says Human Skills Will Matter. They're Right About One of Them.",
+    "lede": "The AI-proof skills list everyone cites is six items long. Five of them are wrong.",
+    "date": "2026-02-15",
+    "readTime": "8 min read",
+    "excerpt": "The AI-proof skills list everyone cites is six items long. Five of them are wrong.",
     "status": "published"
   },
   {
