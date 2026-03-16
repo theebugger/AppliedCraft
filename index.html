@@ -111,81 +111,10 @@
           </p>
         </div>
 
-        <!-- Placeholder posts — titles embody brand voice -->
-        <div class="posts-grid">
-          <article class="post-card reveal">
-            <time class="post-date" datetime="2026-03-10">March 2026</time>
-            <h3 class="post-title">
-              <a href="posts/why-most-ai-product-strategies-are-just-feature-lists.html">Why Most AI Product Strategies Are Just Feature Lists</a>
-            </h3>
-            <p class="post-excerpt">
-              The difference between "we added AI" and an actual product strategy is the same
-              difference between a grocery list and a recipe.
-            </p>
-            <span class="post-meta">8 min read</span>
-          </article>
+        <!-- Posts loaded dynamically from posts/posts.json -->
+        <div class="posts-grid" id="posts-container"></div>
 
-          <article class="post-card reveal">
-            <time class="post-date" datetime="2026-02-24">February 2026</time>
-            <h3 class="post-title">
-              <a href="#">The Build vs. Buy Decision Framework for AI in Product</a>
-            </h3>
-            <p class="post-excerpt">
-              A decision framework for when to build your own model, when to use an API,
-              and when the answer is neither.
-            </p>
-            <span class="post-meta">12 min read</span>
-          </article>
-
-          <article class="post-card reveal">
-            <time class="post-date" datetime="2026-02-10">February 2026</time>
-            <h3 class="post-title">
-              <a href="#">Knowing When Not to Ship: AI Edition</a>
-            </h3>
-            <p class="post-excerpt">
-              The hardest product decision in AI isn't what to build.
-              It's what to stop building.
-            </p>
-            <span class="post-meta">6 min read</span>
-          </article>
-          <article class="post-card post-card--hidden reveal">
-            <time class="post-date" datetime="2026-01-28">January 2026</time>
-            <h3 class="post-title">
-              <a href="#">The Product Manager's Blind Spot in AI</a>
-            </h3>
-            <p class="post-excerpt">
-              We optimise for model accuracy when the actual failure mode is adoption.
-              The best model your users don't trust is worse than a mediocre one they do.
-            </p>
-            <span class="post-meta">7 min read</span>
-          </article>
-
-          <article class="post-card post-card--hidden reveal">
-            <time class="post-date" datetime="2026-01-14">January 2026</time>
-            <h3 class="post-title">
-              <a href="#">Evaluating AI Vendors: A Framework for Product Teams</a>
-            </h3>
-            <p class="post-excerpt">
-              Most vendor evaluations test the demo. Here's a framework for testing
-              what happens six months after the demo.
-            </p>
-            <span class="post-meta">10 min read</span>
-          </article>
-
-          <article class="post-card post-card--hidden reveal">
-            <time class="post-date" datetime="2025-12-18">December 2025</time>
-            <h3 class="post-title">
-              <a href="#">What Your AI Roadmap Is Missing: The Adoption Problem</a>
-            </h3>
-            <p class="post-excerpt">
-              You shipped the feature. The model works. Usage is flat.
-              The roadmap had a gap where the change management should have been.
-            </p>
-            <span class="post-meta">9 min read</span>
-          </article>
-        </div>
-
-        <div class="posts-more">
+        <div class="posts-more" id="posts-more" style="display:none;">
           <button class="posts-show-more" id="posts-show-more" type="button">
             More essays<span class="arrow">&nbsp;&rarr;</span>
           </button>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor — Applied Craft</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='50%25' y='78%25' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%231C1917'>A</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <script>
+    (function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme','dark');})();
+  </script>
+  <style>
+    :root {
+      --bg: #FAF9F7; --surface: #F3F1EE; --text: #1C1917;
+      --text2: #57534E; --text3: #A8A29E; --accent: #B45309;
+      --accent-hover: #92400E; --border: #E7E5E4;
+      --font-h: 'Newsreader',Georgia,serif;
+      --font-b: -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+      --font-m: 'SF Mono','Cascadia Code','Fira Code',ui-monospace,monospace;
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+    [data-theme="dark"] {
+      --bg: #171412; --surface: #231F1C; --text: #F5F3F0;
+      --text2: #A8A29E; --text3: #78716C; --accent: #D97706;
+      --accent-hover: #F59E0B; --border: #3D3835;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-b); font-size: 15px; line-height: 1.6;
+      color: var(--text); background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { cursor:pointer; font:inherit; border:none; background:none; }
+    input, textarea, select { font:inherit; color:var(--text); background:var(--bg); border:1px solid var(--border); border-radius:2px; outline:none; }
+    input:focus, textarea:focus { border-color: var(--accent); }
+
+    /* ── Layout ── */
+    .shell { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+    .header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 16px 24px; border-bottom: 1px solid var(--border);
+      position:sticky; top:0; background:var(--bg); z-index:10;
+    }
+    .header-brand { font-family:var(--font-b); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.18em; color:var(--text3); }
+    .header-actions { display:flex; gap:12px; align-items:center; }
+    .btn {
+      padding: 7px 16px; font-size: 13px; font-weight: 500; border-radius: 2px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn--ghost { color: var(--text2); }
+    .btn--ghost:hover { color: var(--text); }
+    .btn--outline { border: 1px solid var(--border); color: var(--text2); }
+    .btn--outline:hover { border-color: var(--text3); color: var(--text); }
+    .btn--primary { background: var(--text); color: var(--bg); }
+    .btn--primary:hover { background: var(--accent-hover); }
+    .btn--accent { background: var(--accent); color: #fff; }
+    .btn--accent:hover { background: var(--accent-hover); }
+    .btn--sm { padding: 4px 10px; font-size: 12px; }
+
+    /* ── Token Setup ── */
+    .token-gate { padding: 120px 0; text-align: center; }
+    .token-gate h2 { font-family:var(--font-h); font-size:1.5rem; font-weight:500; margin-bottom:8px; }
+    .token-gate p { color:var(--text2); font-size:14px; margin-bottom:24px; max-width:420px; margin-left:auto; margin-right:auto; }
+    .token-input { width:100%; max-width:400px; padding:10px 14px; font-family:var(--font-m); font-size:13px; }
+    .token-save { margin-top:12px; }
+    .token-hint { font-size:12px; color:var(--text3); margin-top:12px; }
+
+    /* ── Posts List ── */
+    .posts-list { padding: 32px 0; }
+    .posts-list-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .posts-list-header h2 { font-family:var(--font-h); font-size:1.25rem; font-weight:500; }
+    .post-row {
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      padding: 14px 0; border-top: 1px solid var(--border); cursor:pointer;
+      transition: opacity 0.15s;
+    }
+    .post-row:hover { opacity: 0.7; }
+    .post-row:last-child { border-bottom: 1px solid var(--border); }
+    .post-row-left { flex:1; min-width:0; }
+    .post-row-title { font-weight:500; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .post-row-meta { font-size:12px; color:var(--text3); margin-top:2px; }
+    .post-row-right { display:flex; gap:8px; align-items:center; flex-shrink:0; }
+    .badge {
+      font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em;
+      padding:3px 8px; border-radius:2px;
+    }
+    .badge--published { background:var(--accent); color:#fff; opacity:0.85; }
+    .badge--draft { background:var(--border); color:var(--text2); }
+
+    /* ── Editor ── */
+    .editor { padding: 32px 0 80px; display:none; }
+    .editor.active { display:block; }
+    .editor-back { font-size:14px; color:var(--text2); margin-bottom:32px; display:inline-block; transition:color 0.15s; }
+    .editor-back:hover { color:var(--accent); }
+    .field { margin-bottom: 20px; }
+    .field label { display:block; font-size:12px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:var(--text3); margin-bottom:6px; }
+    .field input { width:100%; padding:10px 14px; }
+    .field-row { display:flex; gap:16px; }
+    .field-row .field { flex:1; }
+    .title-input {
+      font-family:var(--font-h); font-size:clamp(1.25rem,3vw,1.75rem); font-weight:500;
+      border:none; padding:0; line-height:1.3; background:transparent;
+    }
+    .title-input::placeholder { color:var(--text3); }
+    .lede-input {
+      font-family:var(--font-h); font-size:1.05rem; font-style:italic;
+      border:none; padding:0; line-height:1.5; background:transparent; color:var(--text2); width:100%;
+    }
+    .lede-input::placeholder { color:var(--text3); }
+    .editor-divider { border:none; border-top:1px solid var(--border); margin:24px 0; }
+
+    /* Mode tabs */
+    .editor-tabs { display:flex; gap:0; margin-bottom:16px; border-bottom:1px solid var(--border); }
+    .editor-tab {
+      padding:8px 16px; font-size:13px; font-weight:500; color:var(--text3);
+      border-bottom:2px solid transparent; margin-bottom:-1px; transition:color 0.15s;
+    }
+    .editor-tab:hover { color:var(--text2); }
+    .editor-tab.active { color:var(--text); border-bottom-color:var(--accent); }
+
+    /* Textarea */
+    .editor-write {
+      width:100%; min-height:500px; padding:16px; font-family:var(--font-m);
+      font-size:14px; line-height:1.8; resize:vertical; border:1px solid var(--border);
+      border-radius:2px; background:var(--surface);
+    }
+    .editor-write::placeholder { color:var(--text3); }
+
+    /* Preview — matches article-body styles */
+    .editor-preview {
+      display:none; min-height:500px; padding:16px 0;
+      font-family:var(--font-b); font-size:1.125rem; line-height:1.8; color:var(--text);
+    }
+    .editor-preview p { margin-bottom:1.5rem; }
+    .editor-preview h2 { font-family:var(--font-h); font-size:clamp(1.25rem,2.5vw,1.75rem); font-weight:500; margin-top:3rem; margin-bottom:1.5rem; }
+    .editor-preview h3 { font-family:var(--font-h); font-size:1.125rem; font-weight:600; margin-top:2rem; margin-bottom:1rem; }
+    .editor-preview ul, .editor-preview ol { margin-bottom:1.5rem; padding-left:1.5rem; }
+    .editor-preview li { margin-bottom:0.5rem; }
+    .editor-preview li::marker { color:var(--text3); }
+    .editor-preview strong { font-weight:600; }
+    .editor-preview blockquote { margin:2rem 0; padding:1rem 2rem; border-left:3px solid var(--accent); font-family:var(--font-h); font-style:italic; color:var(--text2); }
+
+    /* Footer bar */
+    .editor-footer {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:16px 0; margin-top:24px; border-top:1px solid var(--border);
+    }
+    .editor-footer-left { display:flex; gap:12px; align-items:center; }
+    .editor-status { font-size:12px; color:var(--text3); }
+    .word-count { font-size:12px; color:var(--text3); }
+
+    /* ── Toast ── */
+    .toast {
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+      padding:10px 20px; font-size:13px; font-weight:500; border-radius:4px;
+      background:var(--text); color:var(--bg); opacity:0;
+      transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+      z-index:100;
+    }
+    .toast.visible { transform:translateX(-50%) translateY(0); opacity:1; }
+
+    /* ── Help ── */
+    .help { padding:32px 0; font-size:14px; color:var(--text2); line-height:1.7; }
+    .help h3 { font-size:13px; font-weight:600; color:var(--text); margin:16px 0 8px; text-transform:uppercase; letter-spacing:0.06em; }
+    .help code { font-family:var(--font-m); font-size:12px; background:var(--surface); padding:2px 6px; border-radius:2px; }
+
+    @media(max-width:640px) {
+      .field-row { flex-direction:column; gap:0; }
+      .post-row { flex-direction:column; align-items:flex-start; gap:8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <span class="header-brand">Applied Craft &middot; Editor</span>
+    <div class="header-actions">
+      <button class="btn btn--ghost" onclick="showHelp()" title="Formatting guide">?</button>
+      <button class="btn btn--ghost" onclick="toggleTheme()">Theme</button>
+      <button class="btn btn--outline" id="header-list-btn" onclick="showList()">All Posts</button>
+    </div>
+  </header>
+
+  <!-- Token gate -->
+  <div class="shell" id="token-gate" style="display:none;">
+    <div class="token-gate">
+      <h2>Connect to GitHub</h2>
+      <p>Enter a Personal Access Token with <strong>repo</strong> scope to read and write posts.</p>
+      <input type="password" class="token-input" id="token-input" placeholder="ghp_xxxxxxxxxxxx">
+      <br>
+      <button class="btn btn--primary token-save" onclick="saveToken()">Connect</button>
+      <p class="token-hint">Create one at github.com/settings/tokens. Stored only in your browser.</p>
+    </div>
+  </div>
+
+  <!-- Posts list -->
+  <div class="shell" id="view-list" style="display:none;">
+    <div class="posts-list">
+      <div class="posts-list-header">
+        <h2>Posts</h2>
+        <button class="btn btn--accent" onclick="newPost()">New Post</button>
+      </div>
+      <div id="posts-list-body"></div>
+    </div>
+  </div>
+
+  <!-- Editor -->
+  <div class="shell" id="view-editor" style="display:none;">
+    <div class="editor active">
+      <a href="#" class="editor-back" onclick="event.preventDefault();showList();">&larr; All Posts</a>
+
+      <div class="field">
+        <input type="text" class="title-input" id="ed-title" placeholder="Post title">
+      </div>
+      <div class="field">
+        <input type="text" class="lede-input" id="ed-lede" placeholder="One-line subtitle (the lede)">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="ed-date">
+        </div>
+        <div class="field">
+          <label>Slug</label>
+          <input type="text" id="ed-slug" placeholder="auto-generated-from-title">
+        </div>
+      </div>
+
+      <hr class="editor-divider">
+
+      <div class="editor-tabs">
+        <button class="editor-tab active" id="tab-write" onclick="setTab('write')">Write</button>
+        <button class="editor-tab" id="tab-preview" onclick="setTab('preview')">Preview</button>
+      </div>
+
+      <textarea class="editor-write" id="ed-body" placeholder="Write in Markdown...
+
+## Section Heading
+
+Paragraph text with **bold** and *italic*.
+
+- List item one
+- List item two
+
+> A blockquote for emphasis.
+
+### Sub-heading
+
+1. Ordered item
+2. Another item"></textarea>
+      <div class="editor-preview" id="ed-preview"></div>
+
+      <div class="editor-footer">
+        <div class="editor-footer-left">
+          <button class="btn btn--outline" onclick="saveDraft()">Save Draft</button>
+          <button class="btn btn--primary" onclick="publishPost()">Publish</button>
+          <span class="editor-status" id="ed-status"></span>
+        </div>
+        <span class="word-count" id="ed-words"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help overlay -->
+  <div class="shell" id="view-help" style="display:none;">
+    <div class="help">
+      <a href="#" class="editor-back" onclick="event.preventDefault();showList();">&larr; Back</a>
+      <h3>Markdown Formatting</h3>
+      <p><code>## Heading</code> &rarr; Section heading (H2)</p>
+      <p><code>### Sub-heading</code> &rarr; Sub-heading (H3)</p>
+      <p><code>**text**</code> &rarr; <strong>Bold</strong></p>
+      <p><code>*text*</code> &rarr; <em>Italic</em></p>
+      <p><code>- item</code> &rarr; Bullet list</p>
+      <p><code>1. item</code> &rarr; Numbered list</p>
+      <p><code>> text</code> &rarr; Blockquote</p>
+      <p>Separate paragraphs with a blank line.</p>
+      <h3>Workflow</h3>
+      <p><strong>Save Draft</strong> stores the post in your browser (localStorage). It won't appear on the site.</p>
+      <p><strong>Publish</strong> creates the HTML page and updates the posts index on GitHub. The site rebuilds in ~30 seconds.</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Config ──
+  var OWNER = 'theebugger';
+  var REPO = 'AppliedCraft';
+  var BRANCH = 'main';
+
+  // ── State ──
+  var token = localStorage.getItem('ac-token') || '';
+  var posts = [];
+  var postsJsonSha = null;
+  var currentSlug = null;
+
+  // ── Init ──
+  if (!token) {
+    show('token-gate');
+  } else {
+    loadPosts();
+  }
+
+  // Keep word count updated
+  var bodyEl = document.getElementById('ed-body');
+  bodyEl.addEventListener('input', updateWordCount);
+
+  // Auto-generate slug from title
+  document.getElementById('ed-title').addEventListener('input', function () {
+    if (!currentSlug) {
+      document.getElementById('ed-slug').value = slugify(this.value);
+    }
+  });
+
+  // ── Views ──
+  function show(id) {
+    ['token-gate','view-list','view-editor','view-help'].forEach(function(v) {
+      document.getElementById(v).style.display = 'none';
+    });
+    document.getElementById(id).style.display = '';
+  }
+
+  window.showList = function () {
+    loadPosts();
+  };
+
+  window.showHelp = function () {
+    show('view-help');
+  };
+
+  window.toggleTheme = function () {
+    var h = document.documentElement;
+    var next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    h.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  };
+
+  // ── Token ──
+  window.saveToken = function () {
+    var val = document.getElementById('token-input').value.trim();
+    if (!val) return;
+    token = val;
+    localStorage.setItem('ac-token', val);
+    loadPosts();
+  };
+
+  // ── GitHub API ──
+  function gh(path, opts) {
+    opts = opts || {};
+    var url = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/' + path;
+    return fetch(url, {
+      method: opts.method || 'GET',
+      headers: {
+        'Authorization': 'token ' + token,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+    }).then(function (r) {
+      if (!r.ok) throw new Error('GitHub API ' + r.status);
+      return r.json();
+    });
+  }
+
+  function loadPosts() {
+    gh('contents/posts/posts.json?ref=' + BRANCH).then(function (file) {
+      postsJsonSha = file.sha;
+      posts = JSON.parse(atob(file.content.replace(/\n/g, '')));
+      posts.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+      renderList();
+      show('view-list');
+    }).catch(function (err) {
+      toast('Failed to load posts: ' + err.message);
+      show('token-gate');
+    });
+  }
+
+  // ── Posts List ──
+  function renderList() {
+    var el = document.getElementById('posts-list-body');
+    if (!posts.length) {
+      el.innerHTML = '<p style="color:var(--text3);padding:32px 0;">No posts yet.</p>';
+      return;
+    }
+    el.innerHTML = posts.map(function (p) {
+      var badge = p.status === 'published'
+        ? '<span class="badge badge--published">Published</span>'
+        : '<span class="badge badge--draft">Draft</span>';
+      return '<div class="post-row" onclick="editPost(\'' + p.slug + '\')">' +
+        '<div class="post-row-left">' +
+          '<div class="post-row-title">' + esc(p.title || 'Untitled') + '</div>' +
+          '<div class="post-row-meta">' + formatDate(p.date, 'short') + ' &middot; ' + (p.readTime || '') + '</div>' +
+        '</div>' +
+        '<div class="post-row-right">' + badge + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ── New / Edit ──
+  window.newPost = function () {
+    currentSlug = null;
+    document.getElementById('ed-title').value = '';
+    document.getElementById('ed-lede').value = '';
+    document.getElementById('ed-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('ed-slug').value = '';
+    bodyEl.value = '';
+    document.getElementById('ed-status').textContent = '';
+    updateWordCount();
+    setTab('write');
+    show('view-editor');
+    document.getElementById('ed-title').focus();
+  };
+
+  window.editPost = function (slug) {
+    currentSlug = slug;
+    var post = posts.find(function (p) { return p.slug === slug; });
+    if (!post) return;
+    document.getElementById('ed-title').value = post.title || '';
+    document.getElementById('ed-lede').value = post.lede || '';
+    document.getElementById('ed-date').value = post.date || '';
+    document.getElementById('ed-slug').value = post.slug || '';
+    // Load body from localStorage draft
+    var draft = localStorage.getItem('ac-draft-' + slug);
+    bodyEl.value = draft || '';
+    document.getElementById('ed-status').textContent = post.status === 'draft' ? 'Draft' : 'Published';
+    updateWordCount();
+    setTab('write');
+    show('view-editor');
+  };
+
+  // ── Tabs ──
+  window.setTab = function (tab) {
+    var writeTab = document.getElementById('tab-write');
+    var previewTab = document.getElementById('tab-preview');
+    var writeEl = bodyEl;
+    var previewEl = document.getElementById('ed-preview');
+
+    if (tab === 'preview') {
+      writeTab.classList.remove('active');
+      previewTab.classList.add('active');
+      writeEl.style.display = 'none';
+      previewEl.style.display = 'block';
+      previewEl.innerHTML = mdToHTML(bodyEl.value);
+    } else {
+      previewTab.classList.remove('active');
+      writeTab.classList.add('active');
+      previewEl.style.display = 'none';
+      writeEl.style.display = '';
+      writeEl.focus();
+    }
+  };
+
+  // ── Save Draft ──
+  window.saveDraft = function () {
+    var slug = getSlug();
+    if (!slug) { toast('Enter a title first.'); return; }
+
+    var meta = getPostMeta(slug, 'draft');
+
+    // Update or add to posts array
+    var idx = posts.findIndex(function (p) { return p.slug === slug; });
+    if (idx >= 0) { posts[idx] = meta; } else { posts.unshift(meta); }
+
+    // Save body to localStorage
+    localStorage.setItem('ac-draft-' + slug, bodyEl.value);
+    currentSlug = slug;
+
+    // Update posts.json on GitHub
+    updatePostsJson().then(function () {
+      document.getElementById('ed-status').textContent = 'Draft saved';
+      toast('Draft saved');
+    }).catch(function (err) {
+      toast('Save failed: ' + err.message);
+    });
+  };
+
+  // ── Publish ──
+  window.publishPost = function () {
+    var slug = getSlug();
+    if (!slug) { toast('Enter a title first.'); return; }
+
+    var title = document.getElementById('ed-title').value.trim();
+    if (!title || !bodyEl.value.trim()) {
+      toast('Title and body are required.');
+      return;
+    }
+
+    var meta = getPostMeta(slug, 'published');
+    var htmlContent = generateArticleHTML(meta, bodyEl.value);
+
+    document.getElementById('ed-status').textContent = 'Publishing...';
+
+    // 1. Create or update the HTML file
+    var filePath = 'contents/posts/' + slug + '.html';
+
+    // Check if file exists (to get sha for update)
+    gh(filePath + '?ref=' + BRANCH).then(function (existing) {
+      return gh(filePath, {
+        method: 'PUT',
+        body: { message: 'Update: ' + title, content: btoa(unescape(encodeURIComponent(htmlContent))), sha: existing.sha, branch: BRANCH }
+      });
+    }).catch(function () {
+      // File doesn't exist — create it
+      return gh(filePath, {
+        method: 'PUT',
+        body: { message: 'Publish: ' + title, content: btoa(unescape(encodeURIComponent(htmlContent))), branch: BRANCH }
+      });
+    }).then(function () {
+      // 2. Update posts.json
+      var idx = posts.findIndex(function (p) { return p.slug === slug; });
+      if (idx >= 0) { posts[idx] = meta; } else { posts.unshift(meta); }
+      return updatePostsJson();
+    }).then(function () {
+      // 3. Clean up draft
+      localStorage.removeItem('ac-draft-' + slug);
+      currentSlug = slug;
+      document.getElementById('ed-status').textContent = 'Published';
+      toast('Published — site rebuilds in ~30s');
+    }).catch(function (err) {
+      document.getElementById('ed-status').textContent = 'Failed';
+      toast('Publish failed: ' + err.message);
+    });
+  };
+
+  // ── Helpers ──
+  function getSlug() {
+    var slug = document.getElementById('ed-slug').value.trim();
+    if (!slug) slug = slugify(document.getElementById('ed-title').value);
+    return slug;
+  }
+
+  function getPostMeta(slug, status) {
+    var body = bodyEl.value;
+    var words = body.trim().split(/\s+/).length;
+    var readMin = Math.max(1, Math.ceil(words / 230));
+    return {
+      slug: slug,
+      title: document.getElementById('ed-title').value.trim(),
+      lede: document.getElementById('ed-lede').value.trim(),
+      date: document.getElementById('ed-date').value,
+      readTime: readMin + ' min read',
+      excerpt: document.getElementById('ed-lede').value.trim(),
+      status: status,
+    };
+  }
+
+  function updatePostsJson() {
+    var content = JSON.stringify(posts, null, 2) + '\n';
+    return gh('contents/posts/posts.json', {
+      method: 'PUT',
+      body: {
+        message: 'Update posts index',
+        content: btoa(unescape(encodeURIComponent(content))),
+        sha: postsJsonSha,
+        branch: BRANCH,
+      }
+    }).then(function (res) {
+      postsJsonSha = res.content.sha;
+    });
+  }
+
+  function slugify(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);
+  }
+
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function formatDate(iso, style) {
+    if (!iso) return '';
+    var d = new Date(iso + 'T00:00:00');
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    if (style === 'short') return months[d.getMonth()] + ' ' + d.getFullYear();
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  function updateWordCount() {
+    var words = bodyEl.value.trim() ? bodyEl.value.trim().split(/\s+/).length : 0;
+    var mins = Math.max(1, Math.ceil(words / 230));
+    document.getElementById('ed-words').textContent = words + ' words · ~' + mins + ' min read';
+  }
+
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('visible');
+    setTimeout(function () { el.classList.remove('visible'); }, 2500);
+  }
+
+  // ── Markdown → HTML ──
+  function mdToHTML(md) {
+    var lines = md.split('\n');
+    var html = '';
+    var inList = null;
+    var inBlockquote = false;
+    var para = [];
+
+    function flush() {
+      if (para.length) {
+        html += '<p>' + para.join(' ') + '</p>\n';
+        para = [];
+      }
+    }
+    function closeList() { if (inList) { html += '</' + inList + '>\n'; inList = null; } }
+    function closeBq() { if (inBlockquote) { html += '</blockquote>\n'; inBlockquote = false; } }
+    function inline(t) {
+      t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      t = t.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      return t;
+    }
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+
+      if (line.trim() === '') { flush(); closeList(); closeBq(); continue; }
+
+      var m;
+      if ((m = line.match(/^## (.+)/))) { flush(); closeList(); closeBq(); html += '<h2>' + inline(m[1]) + '</h2>\n'; continue; }
+      if ((m = line.match(/^### (.+)/))) { flush(); closeList(); closeBq(); html += '<h3>' + inline(m[1]) + '</h3>\n'; continue; }
+      if ((m = line.match(/^[-*] (.+)/))) {
+        flush(); closeBq();
+        if (inList !== 'ul') { closeList(); html += '<ul>\n'; inList = 'ul'; }
+        html += '<li>' + inline(m[1]) + '</li>\n'; continue;
+      }
+      if ((m = line.match(/^\d+\. (.+)/))) {
+        flush(); closeBq();
+        if (inList !== 'ol') { closeList(); html += '<ol>\n'; inList = 'ol'; }
+        html += '<li>' + inline(m[1]) + '</li>\n'; continue;
+      }
+      if ((m = line.match(/^> (.+)/))) {
+        flush(); closeList();
+        if (!inBlockquote) { html += '<blockquote>\n'; inBlockquote = true; }
+        html += '<p>' + inline(m[1]) + '</p>\n'; continue;
+      }
+
+      closeList(); closeBq();
+      para.push(inline(line.trim()));
+    }
+    flush(); closeList(); closeBq();
+    return html;
+  }
+
+  // ── Article HTML Template ──
+  function generateArticleHTML(meta, mdBody) {
+    var bodyHTML = mdToHTML(mdBody);
+    var dateFormatted = formatDate(meta.date, 'full');
+    var t = meta.title;
+    var tEsc = esc(t);
+
+    return '<!DOCTYPE html>\n' +
+'<html lang="en">\n<head>\n' +
+'  <meta charset="UTF-8">\n' +
+'  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+'  <title>' + tEsc + ' — Applied Craft</title>\n' +
+'  <meta name="description" content="' + esc(meta.lede) + '">\n' +
+'  <meta property="og:title" content="' + tEsc + '">\n' +
+'  <meta property="og:description" content="' + esc(meta.lede) + '">\n' +
+'  <meta property="og:type" content="article">\n' +
+'  <link rel="icon" href="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'><text x=\'50%25\' y=\'78%25\' font-family=\'Georgia,serif\' font-size=\'28\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%231C1917\'>A</text></svg>">\n' +
+'  <link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+'  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+'  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">\n' +
+'  <link rel="stylesheet" href="../css/styles.css">\n' +
+'  <script>(function(){var s=localStorage.getItem(\'theme\');if(s)document.documentElement.setAttribute(\'data-theme\',s);else if(window.matchMedia(\'(prefers-color-scheme: dark)\').matches)document.documentElement.setAttribute(\'data-theme\',\'dark\');})();<\/script>\n' +
+'</head>\n<body>\n' +
+'  <a href="#article" class="skip-link">Skip to article</a>\n' +
+'  <nav class="nav" role="navigation" aria-label="Main navigation">\n' +
+'    <a href="../index.html#about" class="nav-wordmark" aria-label="Applied Craft">\n' +
+'      <span class="nav-wm-applied"><span class="wm-letter nav-wm-static">A</span><span class="wm-letter nav-wm-static">P</span><span class="wm-letter nav-wm-static">P</span><span class="wm-letter nav-wm-static">L</span><span class="wm-letter nav-wm-static">I</span><span class="wm-letter nav-wm-static">E</span><span class="wm-letter nav-wm-static">D</span></span>\n' +
+'      <span class="nav-wm-craft"><span class="craft-letter nav-wm-static">C</span><span class="craft-letter nav-wm-static">R</span><span class="craft-letter nav-wm-static">A</span><span class="craft-letter nav-wm-static">F</span><span class="craft-letter nav-wm-static">T</span></span>\n' +
+'    </a>\n' +
+'    <div class="nav-links">\n' +
+'      <a href="../index.html#applied-ai">Applied AI</a>\n' +
+'      <a href="#subscribe" class="nav-cta">Subscribe</a>\n' +
+'      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">\n' +
+'        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>\n' +
+'        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>\n' +
+'      </button>\n' +
+'    </div>\n' +
+'  </nav>\n' +
+'  <main id="article">\n' +
+'    <article class="article">\n' +
+'      <header class="article-header">\n' +
+'        <a href="../index.html#applied-ai" class="article-back">&larr; Applied AI</a>\n' +
+'        <div class="article-meta">\n' +
+'          <time datetime="' + meta.date + '">' + dateFormatted + '</time>\n' +
+'          <span class="article-meta-sep">&middot;</span>\n' +
+'          <span>' + meta.readTime + '</span>\n' +
+'        </div>\n' +
+'        <h1 class="article-title">' + tEsc + '</h1>\n' +
+'        <p class="article-lede">' + esc(meta.lede) + '</p>\n' +
+'      </header>\n' +
+'      <div class="article-body">\n' + bodyHTML + '\n      </div>\n' +
+'      <div class="article-share">\n' +
+'        <span class="article-share-label">Share</span>\n' +
+'        <div class="article-share-links">\n' +
+'          <a href="#" class="share-link" data-platform="twitter" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>\n' +
+'          <a href="#" class="share-link" data-platform="linkedin" aria-label="Share on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>\n' +
+'          <a href="#" class="share-link" data-platform="facebook" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>\n' +
+'          <a href="#" class="share-link" data-platform="whatsapp" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>\n' +
+'          <button class="share-link share-native" data-platform="native" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>\n' +
+'        </div>\n' +
+'      </div>\n' +
+'    </article>\n' +
+'    <section class="section section--subscribe" id="subscribe">\n' +
+'      <div class="container container--narrow">\n' +
+'        <div class="subscribe-inner reveal">\n' +
+'          <h2 class="subscribe-heading">Stay Sharp</h2>\n' +
+'          <p class="subscribe-lead">Join product leaders who prefer signal over noise.</p>\n' +
+'          <form class="subscribe-form" action="#" method="post" aria-label="Newsletter signup">\n' +
+'            <label for="email" class="sr-only">Email address</label>\n' +
+'            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" class="subscribe-input">\n' +
+'            <button type="submit" class="subscribe-button">Subscribe</button>\n' +
+'          </form>\n' +
+'          <p class="subscribe-fine-print">Infrequent. Substantive. No filler.</p>\n' +
+'        </div>\n' +
+'      </div>\n' +
+'    </section>\n' +
+'  </main>\n' +
+'  <footer class="footer"><div class="container"><div class="footer-inner"><span class="footer-brand">Applied Craft</span><span class="footer-sep">&middot;</span><a href="#" class="footer-link">RSS</a></div></div></footer>\n' +
+'  <script src="../js/main.js"><\/script>\n' +
+'</body>\n</html>';
+  }
+
+})();
+</script>
+</body>
+</html>

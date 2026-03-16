@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "why-most-ai-product-strategies-are-just-feature-lists",
+    "title": "Why Most AI Product Strategies Are Just Feature Lists",
+    "lede": "The difference between \"we added AI\" and an actual product strategy is the same difference between a grocery list and a recipe.",
+    "date": "2026-03-10",
+    "readTime": "8 min read",
+    "excerpt": "The difference between \"we added AI\" and an actual product strategy is the same difference between a grocery list and a recipe.",
+    "status": "published"
+  },
+  {
+    "slug": "build-vs-buy-decision-framework-ai",
+    "title": "The Build vs. Buy Decision Framework for AI in Product",
+    "lede": "A decision framework for when to build your own model, when to use an API, and when the answer is neither.",
+    "date": "2026-02-24",
+    "readTime": "12 min read",
+    "excerpt": "A decision framework for when to build your own model, when to use an API, and when the answer is neither.",
+    "status": "published"
+  },
+  {
+    "slug": "knowing-when-not-to-ship-ai-edition",
+    "title": "Knowing When Not to Ship: AI Edition",
+    "lede": "The hardest product decision in AI isn't what to build. It's what to stop building.",
+    "date": "2026-02-10",
+    "readTime": "6 min read",
+    "excerpt": "The hardest product decision in AI isn't what to build. It's what to stop building.",
+    "status": "published"
+  },
+  {
+    "slug": "product-managers-blind-spot-in-ai",
+    "title": "The Product Manager's Blind Spot in AI",
+    "lede": "We optimise for model accuracy when the actual failure mode is adoption.",
+    "date": "2026-01-28",
+    "readTime": "7 min read",
+    "excerpt": "We optimise for model accuracy when the actual failure mode is adoption. The best model your users don't trust is worse than a mediocre one they do.",
+    "status": "published"
+  },
+  {
+    "slug": "evaluating-ai-vendors-framework",
+    "title": "Evaluating AI Vendors: A Framework for Product Teams",
+    "lede": "Most vendor evaluations test the demo. Here's a framework for testing what happens six months after the demo.",
+    "date": "2026-01-14",
+    "readTime": "10 min read",
+    "excerpt": "Most vendor evaluations test the demo. Here's a framework for testing what happens six months after the demo.",
+    "status": "published"
+  },
+  {
+    "slug": "ai-roadmap-missing-adoption-problem",
+    "title": "What Your AI Roadmap Is Missing: The Adoption Problem",
+    "lede": "You shipped the feature. The model works. Usage is flat.",
+    "date": "2025-12-18",
+    "readTime": "9 min read",
+    "excerpt": "You shipped the feature. The model works. Usage is flat. The roadmap had a gap where the change management should have been.",
+    "status": "published"
+  }
+]

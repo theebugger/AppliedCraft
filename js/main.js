@@ -458,11 +458,53 @@
 
 
   /* ═══════════════════════════════════════════════
-     SHOW MORE ESSAYS
+     DYNAMIC POST LOADING
 
-     Reveals hidden post cards with a staggered
-     animation, then removes the button.
+     Fetches posts/posts.json, filters published,
+     renders post cards, and manages show-more.
      ═══════════════════════════════════════════════ */
+
+  var INITIAL_POSTS = 3;
+
+  function initPosts() {
+    var container = document.getElementById('posts-container');
+    if (!container) return;
+
+    fetch('posts/posts.json')
+      .then(function (r) { return r.json(); })
+      .then(function (posts) {
+        var published = posts
+          .filter(function (p) { return p.status === 'published'; })
+          .sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+
+        published.forEach(function (post, i) {
+          var card = document.createElement('article');
+          card.className = 'post-card' + (i >= INITIAL_POSTS ? ' post-card--hidden' : '');
+          card.innerHTML =
+            '<time class="post-date" datetime="' + post.date + '">' + formatDateShort(post.date) + '</time>' +
+            '<h3 class="post-title"><a href="posts/' + post.slug + '.html">' + escHTML(post.title) + '</a></h3>' +
+            '<p class="post-excerpt">' + escHTML(post.excerpt) + '</p>' +
+            '<span class="post-meta">' + post.readTime + '</span>';
+          container.appendChild(card);
+        });
+
+        // Reveal visible cards with stagger
+        var visible = container.querySelectorAll('.post-card:not(.post-card--hidden)');
+        visible.forEach(function (card, i) {
+          card.classList.add('reveal');
+          setTimeout(function () { card.classList.add('visible'); }, 120 * (i + 1));
+        });
+
+        // Show "more" button if needed
+        if (published.length > INITIAL_POSTS) {
+          var moreEl = document.getElementById('posts-more');
+          if (moreEl) moreEl.style.display = '';
+        }
+      })
+      .catch(function () {
+        // Fallback: show nothing (posts.json may not exist in local dev)
+      });
+  }
 
   function initShowMore() {
     var btn = document.getElementById('posts-show-more');
@@ -472,23 +514,34 @@
       var hidden = document.querySelectorAll('.post-card--hidden');
       if (!hidden.length) return;
 
-      // Unhide all — they start at opacity 0 via .reveal
       hidden.forEach(function (card) {
         card.classList.remove('post-card--hidden');
+        card.classList.add('reveal');
       });
 
-      // Staggered reveal
       hidden.forEach(function (card, i) {
         setTimeout(function () {
           card.classList.add('visible');
         }, 120 * (i + 1));
       });
 
-      // Remove the button after reveal
       setTimeout(function () {
         btn.style.display = 'none';
       }, 120 * (hidden.length + 1));
     });
+  }
+
+  function formatDateShort(iso) {
+    if (!iso) return '';
+    var d = new Date(iso + 'T00:00:00');
+    var m = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return m[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function escHTML(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
   }
 
 
@@ -667,6 +720,7 @@
     initWordmark();
     initWordmarkScroll();
     initNavWordmarkClick();
+    initPosts();
     initScrollReveal();
     initNavScroll();
     initSmoothScroll();
