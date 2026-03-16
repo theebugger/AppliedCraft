@@ -555,7 +555,7 @@
     if (!iso) return '';
     var d = new Date(iso + 'T00:00:00');
     var m = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    return m[d.getMonth()] + ' ' + d.getFullYear();
+    return m[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
   function escHTML(s) {
