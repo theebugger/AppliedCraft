@@ -442,12 +442,18 @@
         el.classList.remove('nav-wm-static', 'visible');
       });
 
-      // Start scroll immediately — in parallel with animation
+      // Navigate in parallel with animation
       var aboutEl = document.querySelector('#about');
       if (aboutEl) {
+        // On homepage: scroll to about
         var navHeight = document.querySelector('.nav').offsetHeight || 0;
         var pos = aboutEl.getBoundingClientRect().top + window.scrollY - navHeight + 80;
         window.scrollTo({ top: pos, behavior: 'smooth' });
+      } else {
+        // On other pages: navigate home immediately (loads while animation plays)
+        // Strip the #about hash — go to homepage top, not about section
+        var homeUrl = link.href.replace(/#.*$/, '');
+        window.location.href = homeUrl;
       }
 
       // Run the exact same diffusion animation
@@ -467,10 +473,7 @@
             el.classList.add('nav-wm-static');
           });
 
-          // If on another page, navigate after animation
-          if (!aboutEl) {
-            window.location.href = link.href;
-          }
+          // Navigation already started in parallel above
         }, 900);
       });
     });
