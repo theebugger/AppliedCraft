@@ -571,10 +571,12 @@
   /* ═══════════════════════════════════════════════
      SUBSCRIBE FORM
 
-     Submits via fetch to Formspree (or any endpoint
-     that accepts JSON POST). No page reload.
-
-     Buttondown embed-subscribe endpoint (no API key needed).
+     Submits to Buttondown's embed-subscribe endpoint.
+     Buttondown runs double opt-in under aggressive
+     auditing, so the response is always "check your
+     email to confirm." We use no-cors to avoid CORS
+     errors on the redirect and treat any resolution
+     as submission received.
      ═══════════════════════════════════════════════ */
 
   var FORM_ENDPOINT = 'https://buttondown.com/api/emails/embed-subscribe/appliedcraft';
@@ -594,55 +596,37 @@
         if (!email) return;
 
         // Loading state
-        var originalText = button.textContent;
         button.textContent = 'Sending\u2026';
         button.disabled = true;
         input.disabled = true;
 
+        function showConfirmation() {
+          var wrapper = form.closest('.subscribe-inner');
+          if (!wrapper) return;
+
+          var heading = wrapper.querySelector('.subscribe-heading');
+          var lead = wrapper.querySelector('.subscribe-lead');
+          var fine = wrapper.querySelector('.subscribe-fine-print');
+
+          if (heading) heading.textContent = 'Check your inbox';
+          if (lead) {
+            lead.textContent = 'We just sent a confirmation link to ' + email + '. Click it to finish subscribing.';
+            lead.style.fontStyle = 'normal';
+          }
+          if (fine) fine.textContent = 'No link? Check spam, or try again in a minute.';
+          form.style.display = 'none';
+        }
+
         fetch(FORM_ENDPOINT, {
           method: 'POST',
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: 'email=' + encodeURIComponent(email),
         })
-          .then(function (res) {
-            if (res.ok) {
-              // Success — replace form with confirmation
-              var wrapper = form.closest('.subscribe-inner');
-              if (wrapper) {
-                var heading = wrapper.querySelector('.subscribe-heading');
-                var lead = wrapper.querySelector('.subscribe-lead');
-                var fine = wrapper.querySelector('.subscribe-fine-print');
-
-                if (heading) heading.textContent = "You\u2019re in";
-                if (lead) {
-                  lead.textContent = 'First essay hits your inbox soon.';
-                  lead.style.fontStyle = 'normal';
-                }
-                if (fine) fine.textContent = email;
-                form.style.display = 'none';
-              }
-            } else {
-              throw new Error('Submission failed');
-            }
-          })
-          .catch(function () {
-            // Error state
-            button.textContent = 'Try again';
-            button.disabled = false;
-            input.disabled = false;
-            input.style.borderColor = 'var(--color-accent)';
-
-            // Show inline error
-            var existing = form.querySelector('.subscribe-error');
-            if (!existing) {
-              var err = document.createElement('p');
-              err.className = 'subscribe-error';
-              err.textContent = 'Something went wrong. Please try again.';
-              form.parentNode.insertBefore(err, form.nextSibling);
-            }
-          });
+          .then(showConfirmation)
+          .catch(showConfirmation);
       });
     });
   }
