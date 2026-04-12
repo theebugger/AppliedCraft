@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="64" fill="#1C1917"/>
+  <text x="256" y="218" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="88" font-weight="600" letter-spacing="0.18em" fill="#F5F3F0" text-rendering="geometricPrecision">APPLIED</text>
+  <text x="256" y="310" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="56" font-weight="400" letter-spacing="0.35em" fill="#F5F3F0" text-rendering="geometricPrecision">CRAFT</text>
+  <line x1="156" y1="345" x2="356" y2="345" stroke="#B45309" stroke-width="3"/>
+</svg>

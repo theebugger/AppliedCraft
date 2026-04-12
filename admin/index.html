@@ -590,6 +590,43 @@ Paragraph text with **bold** and *italic*.
     });
   }
 
+  // ── Sitemap Generator ──
+  function generateSitemap() {
+    var published = posts
+      .filter(function (p) { return p.status === 'published'; })
+      .sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+
+    var today = new Date().toISOString().slice(0, 10);
+    var urls = [];
+
+    urls.push('  <url>\n    <loc>' + SITE + '/</loc>\n    <lastmod>' + today + '</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>');
+    urls.push('  <url>\n    <loc>' + SITE + '/about.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>');
+
+    published.forEach(function (p) {
+      urls.push('  <url>\n    <loc>' + SITE + '/posts/' + escXML(p.slug) + '.html</loc>\n    <lastmod>' + p.date + '</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>');
+    });
+
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+      urls.join('\n') + '\n' +
+      '</urlset>\n';
+  }
+
+  function updateSitemap() {
+    var xml = generateSitemap();
+    return gh('contents/sitemap.xml?ref=' + BRANCH).then(function (file) {
+      return gh('contents/sitemap.xml', {
+        method: 'PUT',
+        body: { message: 'Update sitemap', content: btoa(unescape(encodeURIComponent(xml))), sha: file.sha, branch: BRANCH }
+      });
+    }).catch(function () {
+      return gh('contents/sitemap.xml', {
+        method: 'PUT',
+        body: { message: 'Create sitemap', content: btoa(unescape(encodeURIComponent(xml))), branch: BRANCH }
+      });
+    });
+  }
+
   // ── Tabs ──
   window.setTab = function (tab) {
     var writeTab = document.getElementById('tab-write');
@@ -674,6 +711,8 @@ Paragraph text with **bold** and *italic*.
       return updatePostsJson();
     }).then(function () {
       return updateRSS();
+    }).then(function () {
+      return updateSitemap();
     }).then(function () {
       // 3. Clean up draft
       localStorage.removeItem('ac-draft-' + slug);
@@ -814,6 +853,32 @@ Paragraph text with **bold** and *italic*.
     var dateFormatted = formatDate(meta.date, 'full');
     var t = meta.title;
     var tEsc = esc(t);
+    var postUrl = SITE + '/posts/' + meta.slug + '.html';
+    var imageUrl = SITE + '/icon.png';
+    var datePublished = meta.date + 'T00:00:00Z';
+    var dateModified = new Date().toISOString();
+
+    var jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      'headline': t,
+      'description': meta.lede,
+      'image': imageUrl,
+      'author': {
+        '@type': 'Person',
+        'name': 'Sanidhya Khilnani',
+        'url': SITE + '/about.html'
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Applied Craft',
+        'logo': { '@type': 'ImageObject', 'url': imageUrl }
+      },
+      'datePublished': datePublished,
+      'dateModified': dateModified,
+      'mainEntityOfPage': { '@type': 'WebPage', '@id': postUrl },
+      'url': postUrl
+    };
 
     return '<!DOCTYPE html>\n' +
 '<html lang="en">\n<head>\n' +
@@ -821,9 +886,26 @@ Paragraph text with **bold** and *italic*.
 '  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
 '  <title>' + tEsc + ' — Applied Craft</title>\n' +
 '  <meta name="description" content="' + esc(meta.lede) + '">\n' +
+'  <meta name="author" content="Sanidhya Khilnani">\n' +
+'  <link rel="canonical" href="' + postUrl + '">\n' +
+'  <link rel="alternate" type="application/rss+xml" title="Applied Craft" href="' + SITE + '/feed.xml">\n' +
 '  <meta property="og:title" content="' + tEsc + '">\n' +
 '  <meta property="og:description" content="' + esc(meta.lede) + '">\n' +
 '  <meta property="og:type" content="article">\n' +
+'  <meta property="og:url" content="' + postUrl + '">\n' +
+'  <meta property="og:site_name" content="Applied Craft">\n' +
+'  <meta property="og:image" content="' + imageUrl + '">\n' +
+'  <meta property="og:image:width" content="1024">\n' +
+'  <meta property="og:image:height" content="1024">\n' +
+'  <meta property="og:image:alt" content="' + tEsc + '">\n' +
+'  <meta property="article:published_time" content="' + datePublished + '">\n' +
+'  <meta property="article:modified_time" content="' + dateModified + '">\n' +
+'  <meta property="article:author" content="Sanidhya Khilnani">\n' +
+'  <meta name="twitter:card" content="summary_large_image">\n' +
+'  <meta name="twitter:title" content="' + tEsc + '">\n' +
+'  <meta name="twitter:description" content="' + esc(meta.lede) + '">\n' +
+'  <meta name="twitter:image" content="' + imageUrl + '">\n' +
+'  <script type="application/ld+json">' + JSON.stringify(jsonLd) + '<\/script>\n' +
 '  <link rel="icon" href="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'><text x=\'50%25\' y=\'78%25\' font-family=\'Georgia,serif\' font-size=\'28\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%231C1917\'>A</text></svg>">\n' +
 '  <link rel="preconnect" href="https://fonts.googleapis.com">\n' +
 '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +

@@ -1,0 +1,24 @@
+# Applied Craft
+
+> Opinionated analysis of how AI changes the way products are built, decisions are made, and judgment develops. Written for product leaders navigating AI, by Sanidhya Khilnani.
+
+Applied Craft is a blog about the craft of product work in the AI era. Each essay examines a specific frame or tension — judgment, taste, intuition, skill, leverage — and takes a clear position. The essays are long-form, argumentative, and intended to be load-bearing for readers making real decisions about how to use AI in their work.
+
+## Essays
+
+- [Taste Isn't Something You're Born With. It's a 9-step Loop You Run.](https://appliedcraft.blog/posts/the-taste-loop.html): Taste decomposed as a cognitive loop of nine steps across three triads (Receive, Interpret, Resolve). The discipline underneath is clearing the instrument of desire, pride, and ego.
+- [Your Intuition Isn't Unfinished Analysis. It's a Different Kind of Knowing.](https://appliedcraft.blog/posts/your-intuition-isn-t-unfinished-analysis-it-s-a-different-kind-of-knowing.html): Intuition as a third epistemic mode that isn't analysis or randomness. Argues AI can approximate compressed experience but not embodied knowing or the integration of incommensurables.
+- [The AI Judgment Trap: Why Getting Better at AI Is Making You Worse at Product](https://appliedcraft.blog/posts/the-ai-judgment-trap-why-getting-better-at-ai-is-making-you-worse-at-product.html): New PMs who grow up on AI assistance may never develop the override muscle. The struggle AI eliminates is the same struggle that builds judgment.
+- [Your AI Quality Problem Isn't Specifications. It's Taste.](https://appliedcraft.blog/posts/why-your-ai-outputs-are-mediocre-you-never-defined-good.html): Quality specifications get you from terrible to adequate. Taste gets you from adequate to good. The two are distinct problems and most advice conflates them.
+- [Everyone Says Human Skills Will Matter. They're Right About One of Them.](https://appliedcraft.blog/posts/everyone-says-human-skills-will-matter-they-re-right-about-one-of-them.html): Of the six "AI-proof" human skills, only judgment actually scales in demand. The others remain stable. Investing in judgment is the rational career bet.
+- [Your PM Job Is Six Jobs. You're Offloading the Wrong Half.](https://appliedcraft.blog/posts/your-pm-job-is-six-jobs-you-re-offloading-the-wrong-half.html): Every PM skill has a mechanical half (now free via AI) and a judgment half (now exposed). Most PMs are offloading the half they should be developing.
+- [The PM Skills Map, Redrawn for AI](https://appliedcraft.blog/posts/the-pm-skills-map-redrawn-for-ai.html): The four PM senses haven't changed, but what counts within each has. A reframing of the product management skill landscape for an AI-augmented world.
+- [You're Not Leveraging AI. You're Leveraging a Fast Typewriter.](https://appliedcraft.blog/posts/you-re-not-leveraging-ai-you-re-leveraging-a-fast-typewriter.html): Four levels of AI leverage, plus a Level 0 of things to protect from AI entirely. Most PMs operate at Level 1 and call it mastery.
+
+## About
+
+Applied Craft is written by Sanidhya Khilnani, a product builder who has spent years shipping software at scale. The blog is deliberately small, deliberately opinionated, and updated with essays that each take a clear position.
+
+- [About the author](https://appliedcraft.blog/about.html)
+- [RSS feed](https://appliedcraft.blog/feed.xml)
+- [Newsletter](https://appliedcraft.blog/#subscribe)
