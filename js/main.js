@@ -572,11 +572,9 @@
      SUBSCRIBE FORM
 
      Submits to Buttondown's embed-subscribe endpoint.
-     Buttondown runs double opt-in under aggressive
-     auditing, so the response is always "check your
-     email to confirm." We use no-cors to avoid CORS
-     errors on the redirect and treat any resolution
-     as submission received.
+     Auditing is disabled so subscribers are added
+     instantly. We use no-cors to avoid CORS errors on
+     the redirect and treat any resolution as success.
      ═══════════════════════════════════════════════ */
 
   var FORM_ENDPOINT = 'https://buttondown.com/api/emails/embed-subscribe/appliedcraft';
@@ -608,12 +606,12 @@
           var lead = wrapper.querySelector('.subscribe-lead');
           var fine = wrapper.querySelector('.subscribe-fine-print');
 
-          if (heading) heading.textContent = 'Check your inbox';
+          if (heading) heading.textContent = 'You\u2019re in';
           if (lead) {
-            lead.textContent = 'We just sent a confirmation link to ' + email + '. Click it to finish subscribing.';
+            lead.textContent = 'The next essay will land in your inbox.';
             lead.style.fontStyle = 'normal';
           }
-          if (fine) fine.textContent = 'No link? Check spam, or try again in a minute.';
+          if (fine) fine.textContent = email;
           form.style.display = 'none';
         }
 
