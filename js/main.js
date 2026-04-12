@@ -574,12 +574,10 @@
      Submits via fetch to Formspree (or any endpoint
      that accepts JSON POST). No page reload.
 
-     To activate: replace YOUR_FORM_ID below with
-     your Formspree form ID from https://formspree.io
+     Buttondown embed-subscribe endpoint (no API key needed).
      ═══════════════════════════════════════════════ */
 
-  // ── Replace with your Formspree form ID ──
-  var FORM_ENDPOINT = 'https://formspree.io/f/xpqyyaar';
+  var FORM_ENDPOINT = 'https://buttondown.com/api/emails/embed-subscribe/appliedcraft';
 
   function initSubscribe() {
     var forms = document.querySelectorAll('.subscribe-form');
@@ -604,10 +602,9 @@
         fetch(FORM_ENDPOINT, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify({ email: email }),
+          body: 'email=' + encodeURIComponent(email),
         })
           .then(function (res) {
             if (res.ok) {
@@ -703,6 +700,63 @@
 
 
   /* ═══════════════════════════════════════════════
+     POST NAVIGATION (Prev / Next)
+
+     On article pages, fetches posts.json, finds
+     the current post by slug, and injects prev/next
+     links after the article element. Works for all
+     existing and future posts automatically.
+     ═══════════════════════════════════════════════ */
+
+  function initPostNav() {
+    var article = document.querySelector('article.article');
+    if (!article) return;
+
+    // Extract current slug from URL path
+    var path = window.location.pathname;
+    var slug = path.split('/').pop().replace('.html', '');
+    if (!slug) return;
+
+    fetch('../posts/posts.json')
+      .then(function (res) { return res.json(); })
+      .then(function (posts) {
+        // Filter to published, sorted newest-first (as stored)
+        var published = posts.filter(function (p) { return p.status === 'published'; });
+
+        var currentIndex = -1;
+        for (var i = 0; i < published.length; i++) {
+          if (published[i].slug === slug) { currentIndex = i; break; }
+        }
+        if (currentIndex === -1) return;
+
+        // Newer = lower index, older = higher index
+        var newer = currentIndex > 0 ? published[currentIndex - 1] : null;
+        var older = currentIndex < published.length - 1 ? published[currentIndex + 1] : null;
+
+        if (!newer && !older) return;
+
+        var nav = document.createElement('nav');
+        nav.className = 'post-nav';
+        nav.setAttribute('aria-label', 'Post navigation');
+
+        if (older) {
+          nav.innerHTML += '<a href="' + older.slug + '.html" class="post-nav-link post-nav-link--prev">' +
+            '<span class="post-nav-label">\u2190 Previous</span>' +
+            '<span class="post-nav-title">' + older.title + '</span></a>';
+        }
+
+        if (newer) {
+          nav.innerHTML += '<a href="' + newer.slug + '.html" class="post-nav-link post-nav-link--next">' +
+            '<span class="post-nav-label">Next \u2192</span>' +
+            '<span class="post-nav-title">' + newer.title + '</span></a>';
+        }
+
+        article.parentNode.insertBefore(nav, article.nextSibling);
+      });
+  }
+
+
+  /* ═══════════════════════════════════════════════
      THEME TOGGLE
 
      Toggles between light and dark themes. Persists
@@ -750,6 +804,7 @@
     initShowMore();
     initSubscribe();
     initShare();
+    initPostNav();
     initThemeToggle();
   });
 
