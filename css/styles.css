@@ -840,12 +840,7 @@ h1, h2, h3, h4 {
   margin: 0;
 }
 
-.schematic-def dd > span {
-  display: block;
-}
-
 .schematic-eg {
-  margin-top: 0.15rem;
   color: var(--color-text-tertiary);
 }
 
