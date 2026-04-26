@@ -116,64 +116,188 @@
 <p>Most people, on most days, are well served by the audit above. Pick the bottleneck, spend a week on it, see what surfaces. If that is you, you can stop here. The rest of the post is finished. Go for a walk without your phone.</p>
 <p>What follows is for the reader who is already strong on creativity, who does the work for a living, and who has eaten the broad-stroke advice many times. For that reader, the audit is too coarse. The actual question is not "which of three components is weakest" but "which of fifteen sub-axes is the narrowest". For that, you need a map of the kind the rest of this post has spent four thousand words arguing against on aesthetic grounds.</p>
 <p>So here is the map. It is a spreadsheet pretending not to be a worldview, and you should treat it accordingly. It is useful exactly when you are already past the broad strokes and trying to find a more specific axis to attack. The moment it starts feeling like a worldview, throw it out and go for a walk.</p>
-<pre><code>Creativity = fn(Intake, Processing Style, Depth of Operation)
+<div class="schematic" role="figure" aria-label="Creativity decomposition schematic">
+  <div class="schematic-eq schematic-top">Creativity = fn(Intake, Processing Style, Depth of Operation)</div>
 
-──────────────────────────────────────────────────────────────
-Intake = fn(Origin, Accessibility, Rarity)
+  <hr class="schematic-divider">
 
-  Origin ∈ { Direct experience, Primary source, Synthesized source, Internal }
-    Direct experience  : the user interview you ran, the meeting you sat in, the failure you lived through
-    Primary source     : the paper itself, the unedited interview, the book in the form its author produced it
-    Synthesized source : the blog post about the paper, the AI summary, the LinkedIn thread on the book
-    Internal           : a memory of a past conversation, a framework you internalised years ago, a half-formed idea you've been carrying
+  <div class="schematic-section">
+    <div class="schematic-eq">Intake = fn(Origin, Accessibility, Rarity)</div>
 
-  Accessibility = fn(Absorption, Assimilation, Activation)
-    Absorption  : how completely you took the material in when you encountered it
-                  e.g. you can argue with the book, not just nod when its title is mentioned
-    Assimilation: how thoroughly this material has been integrated with your existing knowledge
-                  e.g. it surfaces in three unrelated domains, not just the one where you met it
-    Activation  : how recently and frequently this material has been used
-                  e.g. you wrote about it this month, not "I haven't reached for it since 2019"
+    <div class="schematic-block">
+      <div class="schematic-set">Origin &isin; { Direct experience, Primary source, Synthesized source, Internal }</div>
+      <dl class="schematic-defs">
+        <div class="schematic-def">
+          <dt>Direct experience</dt>
+          <dd><span>the user interview you ran, the meeting you sat in, the failure you lived through</span></dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Primary source</dt>
+          <dd><span>the paper itself, the unedited interview, the book in the form its author produced it</span></dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Synthesized source</dt>
+          <dd><span>the blog post about the paper, the AI summary, the LinkedIn thread on the book</span></dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Internal</dt>
+          <dd><span>a memory of a past conversation, a framework you internalised years ago, a half-formed idea you've been carrying</span></dd>
+        </div>
+      </dl>
+    </div>
 
-  Rarity = fn(General Scarcity, Field-Specific Distance)
-    General Scarcity       : how few people in the broader conversation have engaged with this material
-                             e.g. an obscure 1972 cybernetics paper vs a current bestseller
-    Field-Specific Distance: how far this material is from your specific field's standard intake
-                             e.g. for a PM, bee-colony foraging algorithms (high distance) vs Lean Startup (zero)
+    <div class="schematic-block">
+      <div class="schematic-eq schematic-eq-sub">Accessibility = fn(Absorption, Assimilation, Activation)</div>
+      <dl class="schematic-defs">
+        <div class="schematic-def">
+          <dt>Absorption</dt>
+          <dd>
+            <span>how completely you took the material in when you encountered it</span>
+            <span class="schematic-eg">e.g. you can argue with the book, not just nod when its title is mentioned</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Assimilation</dt>
+          <dd>
+            <span>how thoroughly this material has been integrated with your existing knowledge</span>
+            <span class="schematic-eg">e.g. it surfaces in three unrelated domains, not just the one where you met it</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Activation</dt>
+          <dd>
+            <span>how recently and frequently this material has been used</span>
+            <span class="schematic-eg">e.g. you wrote about it this month, not "I haven't reached for it since 2019"</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
 
-──────────────────────────────────────────────────────────────
-Processing Style = fn(Cross-Category Fluidity, Tolerance to Ambiguity, Cognitive Operation Library)
+    <div class="schematic-block">
+      <div class="schematic-eq schematic-eq-sub">Rarity = fn(General Scarcity, Field-Specific Distance)</div>
+      <dl class="schematic-defs">
+        <div class="schematic-def">
+          <dt>General Scarcity</dt>
+          <dd>
+            <span>how few people in the broader conversation have engaged with this material</span>
+            <span class="schematic-eg">e.g. an obscure 1972 cybernetics paper vs a current bestseller</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Field-Specific Distance</dt>
+          <dd>
+            <span>how far this material is from your specific field's standard intake</span>
+            <span class="schematic-eg">e.g. for a PM, bee-colony foraging algorithms (high distance) vs Lean Startup (zero)</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
 
-  Cross-Category Fluidity: how easily your mind moves between categories and notices structural matches across them
-                           e.g. spotting that a software onboarding flow is structurally a restaurant queueing problem
+  <hr class="schematic-divider">
 
-  Tolerance to Ambiguity: capacity to hold the unresolved without forcing it into premature articulation, evaluation, or closure
-                          e.g. sitting with "something is wrong with this product" for two weeks before letting yourself name what
+  <div class="schematic-section">
+    <div class="schematic-eq">Processing Style = fn(Cross-Category Fluidity, Tolerance to Ambiguity, Cognitive Operation Library)</div>
 
-  Cognitive Operation Library = fn(Library Breadth, Library Fluency)
-    Library Breadth: how many distinct creative operations you can name and apply
-                     e.g. SCAMPER, first-principles reduction, analogy, constraint removal, reframing the problem
-    Library Fluency: how readily you can deploy them under pressure
-                     e.g. in a brainstorm you reach for "remove a hidden constraint" without thinking, the way a cook reaches for the right knife
+    <div class="schematic-block">
+      <dl class="schematic-defs">
+        <div class="schematic-def">
+          <dt>Cross-Category Fluidity</dt>
+          <dd>
+            <span>how easily your mind moves between categories and notices structural matches across them</span>
+            <span class="schematic-eg">e.g. spotting that a software onboarding flow is structurally a restaurant queueing problem</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Tolerance to Ambiguity</dt>
+          <dd>
+            <span>capacity to hold the unresolved without forcing it into premature articulation, evaluation, or closure</span>
+            <span class="schematic-eg">e.g. sitting with "something is wrong with this product" for two weeks before letting yourself name what</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
 
-──────────────────────────────────────────────────────────────
-Depth of Operation = fn(Ground, Flash, Conception, Expression, Traversal Fluency)
+    <div class="schematic-block">
+      <div class="schematic-eq schematic-eq-sub">Cognitive Operation Library = fn(Library Breadth, Library Fluency)</div>
+      <dl class="schematic-defs">
+        <div class="schematic-def">
+          <dt>Library Breadth</dt>
+          <dd>
+            <span>how many distinct creative operations you can name and apply</span>
+            <span class="schematic-eg">e.g. SCAMPER, first-principles reduction, analogy, constraint removal, reframing the problem</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Library Fluency</dt>
+          <dd>
+            <span>how readily you can deploy them under pressure</span>
+            <span class="schematic-eg">e.g. in a brainstorm you reach for "remove a hidden constraint" without thinking, the way a cook reaches for the right knife</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
 
-  Ground    : capacity to enter and maintain the pre-conceptual availability state
-              e.g. a walk without a podcast; the first cup of coffee before the phone is out
-  Flash     : capacity to be in flash-receptive state and receive arrivals cleanly
-              e.g. (high fidelity) the answer arrives in the shower and surprises you; (low) the "intuition" suspiciously confirms what you already wanted
-  Conception: capacity to sustain internal conceptual work faithful to what you think
-              e.g. working an argument out internally for thirty minutes, rather than silently rehearsing what you'll say in the meeting
-  Expression: capacity to externalize fluently and faithfully to the inner conception
-              e.g. the doc carries the original argument intact, rather than softened past the point of having an edge
+  <hr class="schematic-divider">
 
-  Traversal Fluency = fn(Descent Fluency, Ascent Fluency)
-    Descent Fluency: capacity to move to deeper layers on demand
-                     e.g. ten minutes of walking gets you there, not two days of holiday
-    Ascent Fluency : capacity for deeper material to survive transit upward
-                     e.g. the felt-quality of the shower arrival makes it onto the page largely intact, not pre-edited away
-</code></pre>
+  <div class="schematic-section">
+    <div class="schematic-eq">Depth of Operation = fn(Ground, Flash, Conception, Expression, Traversal Fluency)</div>
+
+    <div class="schematic-block">
+      <dl class="schematic-defs">
+        <div class="schematic-def">
+          <dt>Ground</dt>
+          <dd>
+            <span>capacity to enter and maintain the pre-conceptual availability state</span>
+            <span class="schematic-eg">e.g. a walk without a podcast; the first cup of coffee before the phone is out</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Flash</dt>
+          <dd>
+            <span>capacity to be in flash-receptive state and receive arrivals cleanly</span>
+            <span class="schematic-eg">e.g. (high fidelity) the answer arrives in the shower and surprises you; (low) the "intuition" suspiciously confirms what you already wanted</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Conception</dt>
+          <dd>
+            <span>capacity to sustain internal conceptual work faithful to what you think</span>
+            <span class="schematic-eg">e.g. working an argument out internally for thirty minutes, rather than silently rehearsing what you'll say in the meeting</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Expression</dt>
+          <dd>
+            <span>capacity to externalize fluently and faithfully to the inner conception</span>
+            <span class="schematic-eg">e.g. the doc carries the original argument intact, rather than softened past the point of having an edge</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="schematic-block">
+      <div class="schematic-eq schematic-eq-sub">Traversal Fluency = fn(Descent Fluency, Ascent Fluency)</div>
+      <dl class="schematic-defs">
+        <div class="schematic-def">
+          <dt>Descent Fluency</dt>
+          <dd>
+            <span>capacity to move to deeper layers on demand</span>
+            <span class="schematic-eg">e.g. ten minutes of walking gets you there, not two days of holiday</span>
+          </dd>
+        </div>
+        <div class="schematic-def">
+          <dt>Ascent Fluency</dt>
+          <dd>
+            <span>capacity for deeper material to survive transit upward</span>
+            <span class="schematic-eg">e.g. the felt-quality of the shower arrival makes it onto the page largely intact, not pre-edited away</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
 <p>How to use it, briefly. Start at the top. Identify the component that is weakest. Drop into its sub-components, find the specific axis that scores lowest. That is the diagnosis. Spend the next quarter on it, not on the others. The diagnostic specificity is what makes the practice specific. Without it, "be more creative" is the only available advice, which is to say no advice at all.</p>
 
       </div>

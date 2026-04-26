@@ -752,6 +752,123 @@ h1, h2, h3, h4 {
   border-radius: 3px;
 }
 
+/* Schematic — semantic version of the "for the reader who really needs
+   it" appendix block. Replaces the <pre> approach because column-aligned
+   ASCII can't word-wrap without breaking its visual hierarchy. Here each
+   term/definition pair is its own grid cell, so wrapping happens inside
+   the definition column with proper hanging indent against the term. */
+.article-body .schematic {
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.schematic-eq {
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.schematic-eq-sub {
+  margin-top: 0.25rem;
+}
+
+.schematic-top {
+  margin-bottom: 0;
+}
+
+.schematic-divider {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-md) 0;
+}
+
+.schematic-section {
+  /* groups one component (Intake, Processing Style, Depth of Operation) */
+}
+
+.schematic-block {
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-md);
+}
+
+.schematic-block:last-child {
+  margin-bottom: 0;
+}
+
+.schematic-set {
+  margin-bottom: 0.4rem;
+  color: var(--color-text);
+}
+
+.schematic-defs {
+  margin: 0;
+  padding-left: var(--space-md);
+}
+
+.schematic-def {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) 1fr;
+  column-gap: var(--space-md);
+  row-gap: 0;
+  align-items: baseline;
+  margin-bottom: 0.55rem;
+}
+
+.schematic-def:last-child {
+  margin-bottom: 0;
+}
+
+.schematic-def dt {
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.schematic-def dt::after {
+  content: ":";
+  margin-left: 0.4em;
+  color: var(--color-text-tertiary);
+}
+
+.schematic-def dd {
+  margin: 0;
+}
+
+.schematic-def dd > span {
+  display: block;
+}
+
+.schematic-eg {
+  margin-top: 0.15rem;
+  color: var(--color-text-tertiary);
+}
+
+/* On narrow viewports, drop the two-column grid and stack term over
+   definition so long terms (e.g. "Field-Specific Distance",
+   "Cross-Category Fluidity") don't crush the definition column. */
+@media (max-width: 540px) {
+  .article-body .schematic {
+    padding: var(--space-md);
+    font-size: 0.78rem;
+  }
+
+  .schematic-def {
+    grid-template-columns: 1fr;
+    row-gap: 0.15rem;
+  }
+
+  .schematic-block,
+  .schematic-defs {
+    padding-left: var(--space-sm);
+  }
+}
+
 /* Article footer — next essay navigation */
 .article-footer {
   margin-top: var(--space-3xl);
