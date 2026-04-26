@@ -864,6 +864,128 @@ h1, h2, h3, h4 {
   }
 }
 
+/* Topic landing pages — list of essays under a topic. Models on the
+   article shell so headers and bodies share the same column rhythm,
+   then adds a curated essay list at the foot. */
+.topic-essays {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.topic-essays-heading {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin: 0 0 var(--space-xl) 0;
+}
+
+.topic-essay-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.topic-essay {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.topic-essay:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.topic-essay-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.topic-essay-link:hover .topic-essay-title {
+  color: var(--color-accent);
+}
+
+.topic-essay-date {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-xs);
+  font-feature-settings: "tnum";
+}
+
+.topic-essay-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+  margin: 0 0 var(--space-sm) 0;
+  line-height: 1.25;
+  color: var(--color-text);
+  transition: color 0.2s ease;
+}
+
+.topic-essay-lede {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Topics index — grid of the topic pages themselves. */
+.topics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+.topic-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.topic-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.topic-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0 0 var(--space-xs) 0;
+  color: var(--color-text);
+}
+
+.topic-card-lede {
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  font-size: 0.9375rem;
+}
+
+.topic-card-meta {
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  font-feature-settings: "tnum";
+}
+
+@media (min-width: 720px) {
+  .topics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Article footer — next essay navigation */
 .article-footer {
   margin-top: var(--space-3xl);

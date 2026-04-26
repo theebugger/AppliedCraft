@@ -4,6 +4,17 @@
 
 Applied Craft is a blog about the craft of product work in the AI era. Each essay examines a specific frame or tension — judgment, taste, intuition, skill, leverage — and takes a clear position. The essays are long-form, argumentative, and intended to be load-bearing for readers making real decisions about how to use AI in their work.
 
+## Topics
+
+The work clusters around five recurring threads. Three are cognitive faculties (taste, creativity, intuition). One is the master variable that ties them together (judgment). One is the practitioner context (product management in the AI era).
+
+- [Taste](https://appliedcraft.blog/topics/taste.html): The evaluative half of how good work happens. A 9-step cognitive loop, supported by the discipline of clearing one's own instrument.
+- [Creativity](https://appliedcraft.blog/topics/creativity.html): The generative half. Three independently trainable components — intake, processing style, depth of operation — jointly necessary, with the weakest one capping the whole output.
+- [Intuition](https://appliedcraft.blog/topics/intuition.html): A third mode of knowing, distinct from analysis and from luck. Possibly the one form of cognition AI cannot meaningfully approximate.
+- [Judgment](https://appliedcraft.blog/topics/judgment.html): The master variable in the AI era. The half of professional skill AI is exposing rather than replacing.
+- [Product Management](https://appliedcraft.blog/topics/product-management.html): What product management is in the AI era. The four senses haven't changed; what counts within each one has.
+- [Topics index](https://appliedcraft.blog/topics/): All topics, with curated essay lists.
+
 ## Essays
 
 - [Creativity Isn't Inspiration. It's Three Things. You're Probably Working on the Wrong One.](https://appliedcraft.blog/posts/creativity-three-components.html): Creativity decomposed into three trainable components: intake (what you're feeding it), processing style (how you work with it), and depth (how far below the articulating surface you can reach). The asymmetric reader is the more creative reader; the unscheduled hour is the most under-funded part of professional life.
