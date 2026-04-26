@@ -697,6 +697,61 @@ h1, h2, h3, h4 {
   color: var(--color-text-secondary);
 }
 
+/* Schematic / preformatted block — the technical artifact occasionally
+   used at the end of long-form posts. Monospace, bounded width to match
+   the reading column, horizontal scroll for the few lines that exceed
+   it (wrapping would break the column alignment that makes the schematic
+   readable). Recedes from the prose typographically so it reads as an
+   appendix rather than competing with the body text. */
+.article-body pre {
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+
+.article-body pre code {
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre;
+  background: transparent;
+  padding: 0;
+  border: none;
+  color: inherit;
+}
+
+.article-body pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.article-body pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.article-body pre::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+/* Inline code — for occasional monospace references inside running
+   prose. Distinct from the schematic block above. */
+.article-body p code,
+.article-body li code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  padding: 0.1em 0.35em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+}
+
 /* Article footer — next essay navigation */
 .article-footer {
   margin-top: var(--space-3xl);
